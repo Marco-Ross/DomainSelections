@@ -1,9 +1,8 @@
-#METRO TRANSIT
+METRO TRANSIT
 
-##Transportation services.
+Transportation services.
 
-###Sub-domain: Railway transportation
-
+Sub-domain: Railway transportation
 
 Cape Town Metro Rail is in a terrible state at the moment. Things such as pointless travel classes, delayed trains because of poor communication, and a system where you keep a ticket on your person for an entire month, as well as long queues and waiting times etc. A paper system given enough time will soon become out of date. It also costs metro excessive amounts to produce these tickets with all the ink and paper usage.
 
