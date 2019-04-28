@@ -9,9 +9,9 @@ public class RouteFactoryTest {
 
     @Test
     public void getRoute() {
-        String routeArea = "Bellville";
+        int routeAreaCode = 2;
         String routeName = "Northern";
-        Route route = RouteFactory.getRoute(routeArea, routeName);
-        assertNotNull(route.getRouteArea());
+        Route route = RouteFactory.getRoute(routeAreaCode, routeName);
+        assertNotNull(route.getRouteAreaCode());
     }
 }

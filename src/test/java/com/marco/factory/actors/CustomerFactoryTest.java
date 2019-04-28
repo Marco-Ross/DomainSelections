@@ -13,7 +13,8 @@ public class CustomerFactoryTest {
         String surname = "konnie";
         int age = 30;
         String idNumber = "1912185698256";
-        Customer customer = CustomerFactory.getCustomer(name,surname,age,idNumber);
+
+        Customer customer = CustomerFactory.getCustomer(name,surname,age,idNumber, 200);
         assertSame(customer.getIdNumber(), "1912185698256");
     }
 }

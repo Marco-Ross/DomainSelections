@@ -9,9 +9,10 @@ public class ReportFactoryTest {
 
     @Test
     public void getReport() {
+        int reportID = 20;
         double revenue = 400.50;
         double profit = 300;
-        Report report = ReportFactory.getReport(revenue, profit);
+        Report report = ReportFactory.getReport(revenue, profit, reportID);
         assertNotEquals(report.getProfit(), report.getRevenue());
     }
 }

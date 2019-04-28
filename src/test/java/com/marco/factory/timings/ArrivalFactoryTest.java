@@ -11,9 +11,8 @@ public class ArrivalFactoryTest {
 
     @Test
     public void getArrival() {
-        Date estimatedArrivalTime = new Date();
         String arrivalStation = "Thornton";
-        Arrival arrival = ArrivalFactory.getArrival(estimatedArrivalTime, arrivalStation);
+        Arrival arrival = ArrivalFactory.getArrival(2, arrivalStation);
         assertNotNull(arrival.getArrivalStation());
     }
 }

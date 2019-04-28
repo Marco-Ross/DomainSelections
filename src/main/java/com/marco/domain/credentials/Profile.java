@@ -1,13 +1,19 @@
 package com.marco.domain.credentials;
 
 public class Profile {
+    private  int profileId;
     private String displayName;
 
     private Profile() {
     }
 
     private Profile(Builder builder){
+        this.profileId = builder.profileId;
         this.displayName = builder.displayName;
+    }
+
+    public int getProfileId() {
+        return profileId;
     }
 
     public String getDisplayName() {
@@ -15,7 +21,13 @@ public class Profile {
     }
 
     public static class Builder{
+        private  int profileId;
         private String displayName;
+
+        public Builder profileId(int profileId){
+            this.profileId = profileId;
+            return this;
+        }
 
         public Builder displayName(String displayName){
             this.displayName = displayName;

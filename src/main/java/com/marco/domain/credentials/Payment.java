@@ -1,5 +1,7 @@
 package com.marco.domain.credentials;
 
+import com.marco.domain.actors.Customer;
+
 public class Payment {
     private double amount;
 

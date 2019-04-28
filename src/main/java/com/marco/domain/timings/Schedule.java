@@ -1,38 +1,47 @@
 package com.marco.domain.timings;
 
+import com.marco.domain.transit.Train;
+
 import java.util.Date;
 
 public class Schedule {
-    private String trainLocation;
-    private Date trainDelays;
+    private Date arrival;
+    private Date departure;
+    private Train train;
 
     private Schedule() {
     }
 
     private Schedule(Builder builder){
-        this.trainLocation = builder.trainLocation;
-        this.trainDelays = builder.trainDelays;
+        this.departure = builder.departure;
+        this.arrival = builder.arrival;
+        this.train = builder.train;
     }
 
-    public String getTrainLocation() {
-        return trainLocation;
+    public Train getTrain(){
+        return train;
     }
-
-    public Date getTrainDelays() {
-        return trainDelays;
+    public int getTrainNumber() {
+        return train.getTrainNumber();
     }
 
     public static class Builder{
-        private String trainLocation;
-        private Date trainDelays;
+        private Date arrival;
+        private Date departure;
+        private Train train;
 
-        public Builder trainLocation(String trainLocation){
-            this.trainLocation = trainLocation;
+        public Builder departure(Date departure){
+            this.departure = departure;
             return this;
         }
 
-        public Builder trainDelays(Date trainDelays){
-            this.trainDelays = trainDelays;
+        public Builder arrival(Date arrival){
+            this.arrival = arrival;
+            return this;
+        }
+
+        public Builder train(Train train){
+            this.train = train;
             return this;
         }
 

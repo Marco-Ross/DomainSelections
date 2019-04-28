@@ -3,19 +3,19 @@ package com.marco.domain.timings;
 import java.util.Date;
 
 public class Arrival {
-    private Date estimatedArrivalTime;
+    private int arrivalId;
     private String arrivalStation;
 
     private Arrival() {
     }
 
     private Arrival(Builder builder){
-        this.estimatedArrivalTime = builder.estimatedArrivalTime;
+        this.arrivalId = builder.arrivalId;
         this.arrivalStation = builder.arrivalStation;
     }
 
-    public Date getEstimatedArrivalTime() {
-        return estimatedArrivalTime;
+    public int getArrivalId() {
+        return arrivalId;
     }
 
     public String getArrivalStation() {
@@ -23,14 +23,13 @@ public class Arrival {
     }
 
     public static class Builder{
-        private Date estimatedArrivalTime;
+        private int arrivalId;
         private String arrivalStation;
 
-        public Builder estimatedArrivalTime(Date estimatedArrivalTime){
-            this.estimatedArrivalTime = estimatedArrivalTime;
+        public Builder arrivalId(int arrivalId){
+            this.arrivalId = arrivalId;
             return this;
         }
-
         public Builder arrivalStation(String arrivalStation){
             this.arrivalStation = arrivalStation;
             return this;

@@ -5,6 +5,7 @@ public class Customer implements Employee {
     private String surname;
     private int age;
     private String idNumber;
+    private double balance;
 
     private Customer(){}
 
@@ -13,6 +14,7 @@ public class Customer implements Employee {
         this.surname = builder.surname;
         this.age = builder.age;
         this.idNumber = builder.idNumber;
+        this.balance = builder.balance;
     }
 
     public String getName() {
@@ -31,11 +33,16 @@ public class Customer implements Employee {
         return idNumber;
     }
 
+    public double getBalance() {
+        return balance;
+    }
+
     public static class Builder{
         private String name;
         private String surname;
         private int age;
         private String idNumber;
+        private double balance;
 
         public Builder name(String name){
             this.name = name;
@@ -54,6 +61,11 @@ public class Customer implements Employee {
 
         public Builder idNumber(String idNumber){
             this.idNumber = idNumber;
+            return this;
+        }
+
+        public Builder balance(double balance){
+            this.balance = balance;
             return this;
         }
 

@@ -4,35 +4,35 @@ import java.util.Date;
 
 public class Platform {
     private int platformNumber;
-    private Date platformTrainArrivalTime;
+    private int platformLength;
 
     private Platform() {
     }
 
     private Platform(Builder builder){
         this.platformNumber = builder.platformNumber;
-        this.platformTrainArrivalTime = builder.platformTrainArrivalTime;
+        this.platformLength = builder.platformLength;
     }
 
     public int getPlatformNumber() {
         return platformNumber;
     }
 
-    public Date getPlatformTrainArrivalTime() {
-        return platformTrainArrivalTime;
+    public int getPlatformLength() {
+        return platformLength;
     }
 
     public static class Builder{
         private int platformNumber;
-        private Date platformTrainArrivalTime;
+        private int platformLength;
 
         public Builder platformNumber(int platformNumber){
             this.platformNumber = platformNumber;
             return this;
         }
 
-        public Builder platformTrainArrivalTime(Date platformTrainArrivalTime){
-            this.platformTrainArrivalTime = platformTrainArrivalTime;
+        public Builder platformLength(int platformLength){
+            this.platformLength = platformLength;
             return this;
         }
 

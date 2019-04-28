@@ -11,9 +11,10 @@ public class DepartureFactoryTest {
 
     @Test
     public void getDeparture() {
-        Date estimatedDepartureTime = new Date();
+        Date departureTime = new Date();
         String departureStation = "Cape Town";
-        Departure departure = DepartureFactory.getDeparture(estimatedDepartureTime, departureStation);
+
+        Departure departure = DepartureFactory.getDeparture(departureTime, departureStation);
         assertNotNull(departure.getDepartureStation());
     }
 }

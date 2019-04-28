@@ -3,6 +3,7 @@ package com.marco.domain.bookings;
 public class Report {
     private double revenue;
     private double profit;
+    private int reportID;
 
     private Report() {
     }
@@ -10,6 +11,7 @@ public class Report {
     private Report(Builder builder){
         this.revenue = builder.revenue;
         this.profit = builder.profit;
+        this.reportID = builder.reportID;
     }
 
     public double getRevenue() {
@@ -20,9 +22,14 @@ public class Report {
         return profit;
     }
 
+    public double getReportID() {
+        return reportID;
+    }
+
     public static class Builder{
         private double revenue;
         private double profit;
+        private int reportID;
 
         public Builder revenue(double revenue){
             this.revenue = revenue;
@@ -31,6 +38,11 @@ public class Report {
 
         public Builder profit(double profit){
             this.profit = profit;
+            return this;
+        }
+
+        public Builder reportID(int reportID){
+            this.reportID = reportID;
             return this;
         }
 

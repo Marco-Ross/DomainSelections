@@ -1,13 +1,15 @@
 package com.marco.factory.timings;
 
 import com.marco.domain.timings.Schedule;
+import com.marco.domain.transit.Train;
 
 import java.util.Date;
 
 public class ScheduleFactory {
-    public static Schedule getSchedule(String trainLocation, Date trainDelays){
-        return new Schedule.Builder().trainLocation(trainLocation)
-                .trainDelays(trainDelays)
+    public static Schedule getSchedule(Date departure, Date arrival, Train train){
+        return new Schedule.Builder().departure(departure)
+                .arrival(arrival)
+                .train(train)
                 .build();
     }
 }

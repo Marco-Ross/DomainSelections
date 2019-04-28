@@ -5,9 +5,9 @@ import com.marco.domain.transit.Platform;
 import java.util.Date;
 
 public class PlatformFactory {
-    public static Platform getPlatform(int platformNumber, Date platformTrainArrivalTime){
+    public static Platform getPlatform(int platformNumber, int platformLength){
         return new Platform.Builder().platformNumber(platformNumber)
-                .platformTrainArrivalTime(platformTrainArrivalTime)
+                .platformLength(platformLength)
                 .build();
     }
 }

@@ -1,19 +1,19 @@
 package com.marco.domain.transit;
 
 public class Route {
-    private String routeArea;
+    private int routeAreaCode;
     private String routeName;
 
     private Route() {
     }
 
     private Route(Builder builder){
-        this.routeArea = builder.routeArea;
+        this.routeAreaCode = builder.routeAreaCode;
         this.routeName = builder.routeName;
     }
 
-    public String getRouteArea() {
-        return routeArea;
+    public int getRouteAreaCode() {
+        return routeAreaCode;
     }
 
     public String getRouteName() {
@@ -21,11 +21,11 @@ public class Route {
     }
 
     public static class Builder{
-        private String routeArea;
+        private int routeAreaCode;
         private String routeName;
 
-        public Builder routeArea(String routeArea){
-            this.routeArea = routeArea;
+        public Builder routeAreaCode(int routeAreaCode){
+            this.routeAreaCode = routeAreaCode;
             return this;
         }
 
