@@ -11,7 +11,7 @@ public class RouteFactoryTest {
     public void getRoute() {
         int routeAreaCode = 2;
         String routeName = "Northern";
-        Route route = RouteFactory.getRoute(routeAreaCode, routeName);
-        assertNotNull(route.getRouteAreaCode());
+        Route route = RouteFactory.buildRoute(routeAreaCode, routeName);
+        assertEquals(routeAreaCode, route.getRouteAreaCode());
     }
 }

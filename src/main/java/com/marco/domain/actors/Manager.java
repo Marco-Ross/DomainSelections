@@ -45,6 +45,14 @@ public class Manager implements Employee{
             return this;
         }
 
+        public Builder copy(Manager manager){
+            this.name = manager.name;
+            this.surname = manager.surname;
+            this.employeeNumber = manager.employeeNumber;
+
+            return this;
+        }
+
         public Manager build(){return new Manager(this);}
     }
 

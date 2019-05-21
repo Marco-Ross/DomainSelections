@@ -13,7 +13,9 @@ public class PaymentFactoryTest {
     @Test
     public void getPayment() {
         double amount = 200;
-        Payment payment = PaymentFactory.getPayment(amount);
-        assertNotEquals(payment.getAmount(), 200);
+        Customer customer = CustomerFactory.buildCustomer("peter", "guy", 30, "45878968958", 250);
+
+        Payment payment = PaymentFactory.buildPayment(amount, customer);
+        assertEquals(amount, payment.getAmount(), 0.1);
     }
 }

@@ -2,8 +2,7 @@ package com.marco.domain.bookings;
 
 import java.util.Date;
 
-public class OfflineBooking {
-    private int offlineBookingId;
+public class OfflineBooking implements Booking{
     private Date offlineBookingDate;
     private int offlineQuantityBooked;
 
@@ -11,13 +10,8 @@ public class OfflineBooking {
     }
 
     private OfflineBooking(Builder builder){
-        this.offlineBookingId = builder.offlineBookingId;
         this.offlineBookingDate = builder.offlineBookingDate;
         this.offlineQuantityBooked = builder.offlineQuantityBooked;
-    }
-
-    public int getOfflineBookingId() {
-        return offlineBookingId;
     }
 
     public Date getOfflineBookingDate() {
@@ -29,14 +23,8 @@ public class OfflineBooking {
     }
 
     public static class Builder{
-        private int offlineBookingId;
         private Date offlineBookingDate;
         private int offlineQuantityBooked;
-
-        public Builder offlineBookingId(int offlineBookingId){
-            this.offlineBookingId = offlineBookingId;
-            return this;
-        }
 
         public Builder offlineBookingDate(Date offlineBookingDate){
             this.offlineBookingDate = offlineBookingDate;
@@ -45,6 +33,13 @@ public class OfflineBooking {
 
         public Builder offlineQuantityBooked(int offlineQuantityBooked){
             this.offlineQuantityBooked = offlineQuantityBooked;
+            return this;
+        }
+
+        public Builder copy(OfflineBooking offlineBooking){
+            this.offlineBookingDate = offlineBooking.offlineBookingDate;
+            this.offlineQuantityBooked = offlineBooking.offlineQuantityBooked;
+
             return this;
         }
 

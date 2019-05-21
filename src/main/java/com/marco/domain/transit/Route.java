@@ -34,6 +34,13 @@ public class Route {
             return this;
         }
 
+        public Builder copy(Route route){
+            this.routeAreaCode = route.routeAreaCode;
+            this.routeName = route.routeName;
+
+            return this;
+        }
+
         public Route build(){return new Route(this);}
     }
 }

@@ -45,6 +45,14 @@ public class Security implements Employee{
             return this;
         }
 
+        public Builder copy(Security security){
+            this.name = security.name;
+            this.surname = security.surname;
+            this.employeeNumber = security.employeeNumber;
+
+            return this;
+        }
+
         public Security build(){return new Security(this);}
     }
 

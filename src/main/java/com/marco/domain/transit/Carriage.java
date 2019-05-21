@@ -34,6 +34,13 @@ public class Carriage {
             return this;
         }
 
+        public Builder copy(Carriage carriage){
+            this.carriageNumber = carriage.carriageNumber;
+            this.capacity = carriage.capacity;
+
+            return this;
+        }
+
         public Carriage build(){return new Carriage(this);}
     }
 }

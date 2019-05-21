@@ -12,7 +12,8 @@ public class ReportFactoryTest {
         int reportID = 20;
         double revenue = 400.50;
         double profit = 300;
-        Report report = ReportFactory.getReport(revenue, profit, reportID);
-        assertNotEquals(report.getProfit(), report.getRevenue());
+
+        Report report = ReportFactory.buildReport(revenue, profit, reportID);
+        assertEquals(profit, report.getProfit(), 0.1);
     }
 }

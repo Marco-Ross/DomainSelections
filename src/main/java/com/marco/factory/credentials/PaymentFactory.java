@@ -5,8 +5,9 @@ import com.marco.domain.credentials.LoginDetail;
 import com.marco.domain.credentials.Payment;
 
 public class PaymentFactory {
-    public static Payment getPayment(double amount){
+    public static Payment buildPayment(double amount, Customer customer){
         return new Payment.Builder().amount(amount)
+                .customer(customer)
                 .build();
     }
 }

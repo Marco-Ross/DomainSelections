@@ -11,7 +11,7 @@ public class CarriageFactoryTest {
     public void getCarriage() {
         int carriageNumber = 2;
         int capacity = 50;
-        Carriage carriage = CarriageFactory.getCarriage(carriageNumber, capacity);
-        assertSame(carriage.getCapacity(), 50);
+        Carriage carriage = CarriageFactory.buildCarriage(carriageNumber, capacity);
+        assertSame(capacity, carriage.getCapacity());
     }
 }

@@ -11,7 +11,7 @@ public class StationFactoryTest {
     public void getStation() {
         String stationName = "myStation";
         int stationNumber = 5;
-        Station station = StationFactory.getStation(stationName, stationNumber);
+        Station station = StationFactory.buildStation(stationName, stationNumber);
         assertNotNull(station.getStationName());
     }
 }

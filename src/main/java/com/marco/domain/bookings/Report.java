@@ -22,7 +22,7 @@ public class Report {
         return profit;
     }
 
-    public double getReportID() {
+    public int getReportID() {
         return reportID;
     }
 
@@ -43,6 +43,14 @@ public class Report {
 
         public Builder reportID(int reportID){
             this.reportID = reportID;
+            return this;
+        }
+
+        public Builder copy(Report report){
+            this.revenue = report.revenue;
+            this.profit = report.profit;
+            this.reportID = report.reportID;
+
             return this;
         }
 

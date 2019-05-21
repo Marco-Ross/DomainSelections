@@ -36,6 +36,13 @@ public class Platform {
             return this;
         }
 
+        public Builder copy(Platform platform){
+            this.platformNumber = platform.platformNumber;
+            this.platformLength = platform.platformLength;
+
+            return this;
+        }
+
         public Platform build(){return new Platform(this);}
     }
 }

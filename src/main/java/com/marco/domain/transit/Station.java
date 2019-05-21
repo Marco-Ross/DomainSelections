@@ -34,6 +34,13 @@ public class Station {
             return this;
         }
 
+        public Builder copy(Station station){
+            this.stationName = station.stationName;
+            this.stationNumber = station.stationNumber;
+
+            return this;
+        }
+
         public Station build(){return new Station(this);}
     }
 }

@@ -12,7 +12,7 @@ public class DriverFactoryTest {
         String name = "kyle";
         String surname = "julies";
         int employeeNumber = 3365;
-        Driver driver = DriverFactory.getDriver(name, surname, employeeNumber);
+        Driver driver = DriverFactory.buildDriver(name, surname, employeeNumber);
         assertNotNull(driver.getName());
     }
 }

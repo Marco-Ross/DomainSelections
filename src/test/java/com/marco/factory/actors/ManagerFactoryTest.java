@@ -12,7 +12,7 @@ public class ManagerFactoryTest {
         String name = "julies";
         String surname = "malema";
         int employeeNumber = 1234;
-        Manager manager = ManagerFactory.getManager(name, surname, employeeNumber);
+        Manager manager = ManagerFactory.buildManager(name, surname, employeeNumber);
         assertNotNull(manager.getName());
     }
 }

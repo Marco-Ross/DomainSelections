@@ -18,7 +18,7 @@ public class OnlineBookingFactoryTest {
         Date bookedDate = calendar.getTime();
 
         int carriageBooked = 1;
-        OnlineBooking onlineBooking = OnlineBookingFactory.getOnlineBooking(12, bookedDate, carriageBooked);
-        assertSame(onlineBooking.getCarriageBooked(), 1);
+        OnlineBooking onlineBooking = OnlineBookingFactory.buildOnlineBooking(12, bookedDate, carriageBooked);
+        assertSame(carriageBooked, onlineBooking.getCarriageBooked());
     }
 }

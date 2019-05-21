@@ -45,6 +45,14 @@ public class Driver implements Employee{
             return this;
         }
 
+        public Builder copy(Driver driver){
+            this.name = driver.name;
+            this.surname = driver.surname;
+            this.employeeNumber = driver.employeeNumber;
+
+            return this;
+        }
+
         public Driver build(){return new Driver(this);}
     }
 

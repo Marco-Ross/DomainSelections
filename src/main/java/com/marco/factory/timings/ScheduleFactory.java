@@ -6,7 +6,7 @@ import com.marco.domain.transit.Train;
 import java.util.Date;
 
 public class ScheduleFactory {
-    public static Schedule getSchedule(Date departure, Date arrival, Train train){
+    public static Schedule buildSchedule(Date departure, Date arrival, Train train){
         return new Schedule.Builder().departure(departure)
                 .arrival(arrival)
                 .train(train)

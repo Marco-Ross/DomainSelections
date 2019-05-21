@@ -18,7 +18,7 @@ public class OfflineBookingFactoryTest {
 
         int offlineQuantityBooked = 60;
 
-        OfflineBooking offlineBooking = OfflineBookingFactory.getOfflineBooking(12, bookedDate, offlineQuantityBooked);
-        assertSame(offlineBooking.getOfflineQuantityBooked(), 60);
+        OfflineBooking offlineBooking = OfflineBookingFactory.buildOfflineBooking(bookedDate, offlineQuantityBooked);
+        assertSame(offlineQuantityBooked, offlineBooking.getOfflineQuantityBooked());
     }
 }

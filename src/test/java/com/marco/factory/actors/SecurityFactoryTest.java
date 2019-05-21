@@ -12,7 +12,7 @@ public class SecurityFactoryTest {
         String name = "owen";
         String surname = "dawson";
         int employeeNumber = 8756;
-        Security security = SecurityFactory.getSecurity(name, surname, employeeNumber);
+        Security security = SecurityFactory.buildSecurity(name, surname, employeeNumber);
         assertNotNull(security.getName(), security.getSurname());
     }
 }

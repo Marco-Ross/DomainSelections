@@ -10,7 +10,7 @@ public class ProfileFactoryTest {
     @Test
     public void getProfile() {
         String displayName = "PietTheGreat";
-        Profile profile = ProfileFactory.getProfile(12, displayName);
+        Profile profile = ProfileFactory.buildProfile(12, displayName);
         assertNotNull(profile.getDisplayName());
     }
 }

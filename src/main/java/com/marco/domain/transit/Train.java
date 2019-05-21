@@ -3,28 +3,29 @@ package com.marco.domain.transit;
 public class Train {
     private int trainNumber;
     private int capacity;
-    private String trainLocation;
+    private String trainName;
+
 
     private Train(){}
 
     private Train(Builder builder){
         this.trainNumber = builder.trainNumber;
         this.capacity = builder.capacity;
-        this.trainLocation = builder.trainLocation;
+        this.trainName = builder.trainName;
     }
 
     public int getTrainNumber(){return trainNumber;}
 
     public int getCapacity(){return capacity;}
 
-    public String getTrainLocation(){
-        return trainLocation;
+    public String getTrainName(){
+        return trainName;
     }
 
     public static class Builder{
         private int trainNumber;
         private int capacity;
-        private String trainLocation;
+        private String trainName;
 
         public Builder trainNumber(int trainNumber){
             this.trainNumber = trainNumber;
@@ -36,8 +37,16 @@ public class Train {
             return this;
         }
 
-        public Builder trainLocation(String trainLocation){
-            this.trainLocation = trainLocation;
+        public Builder trainName(String trainName){
+            this.trainName = trainName;
+            return this;
+        }
+
+        public Builder copy(Train train){
+            this.trainNumber = train.trainNumber;
+            this.capacity = train.capacity;
+            this.trainName = train.trainName;
+
             return this;
         }
 

@@ -35,6 +35,13 @@ public class BookingStatus {
             return this;
         }
 
+        public Builder copy(BookingStatus bookingStatus){
+            this.bookingId = bookingStatus.bookingId;
+            this.timesBooked = bookingStatus.timesBooked;
+
+            return this;
+        }
+
         public BookingStatus build(){return new BookingStatus(this);}
     }
 }

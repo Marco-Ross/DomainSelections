@@ -14,7 +14,7 @@ public class CustomerFactoryTest {
         int age = 30;
         String idNumber = "1912185698256";
 
-        Customer customer = CustomerFactory.getCustomer(name,surname,age,idNumber, 200);
-        assertSame(customer.getIdNumber(), "1912185698256");
+        Customer customer = CustomerFactory.buildCustomer(name,surname,age,idNumber, 200);
+        assertSame(idNumber, customer.getIdNumber());
     }
 }

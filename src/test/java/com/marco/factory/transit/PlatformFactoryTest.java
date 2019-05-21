@@ -13,7 +13,7 @@ public class PlatformFactoryTest {
     public void getPlatform() {
         int platformNumber = 3;
 
-        Platform platform = PlatformFactory.getPlatform(platformNumber, 40);
-        assertSame(platform.getPlatformNumber(), 3);
+        Platform platform = PlatformFactory.buildPlatform(platformNumber, 40);
+        assertSame(platformNumber, platform.getPlatformNumber());
     }
 }

@@ -12,7 +12,7 @@ public class TicketClerkFactoryTest {
         String name = "owen";
         String surname = "dawson";
         int employeeNumber = 8756;
-        TicketClerk ticketClerk = TicketClerkFactory.getTicketClerk(name, surname, employeeNumber);
+        TicketClerk ticketClerk = TicketClerkFactory.buildTicketClerk(name, surname, employeeNumber);
         assertNotNull(ticketClerk.getName(), ticketClerk.getSurname());
     }
 }

@@ -2,7 +2,7 @@ package com.marco.domain.bookings;
 
 import java.util.Date;
 
-public class OnlineBooking {
+public class OnlineBooking implements Booking{
     private int onlineBookingId;
     private Date onlineBookingDate;
     private int carriageBooked;
@@ -45,6 +45,14 @@ public class OnlineBooking {
 
         public Builder carriageBooked(int carriageBooked){
             this.carriageBooked = carriageBooked;
+            return this;
+        }
+
+        public Builder copy(OnlineBooking onlineBooking){
+            this.onlineBookingId = onlineBooking.onlineBookingId;
+            this.onlineBookingDate = onlineBooking.onlineBookingDate;
+            this.carriageBooked = onlineBooking.carriageBooked;
+
             return this;
         }
 

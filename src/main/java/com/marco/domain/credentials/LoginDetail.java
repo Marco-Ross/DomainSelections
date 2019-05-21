@@ -6,6 +6,7 @@ public class LoginDetail {
     private String username;
     private String password;
     private Customer customer;
+    private Profile profile;
 
     private LoginDetail() {
     }
@@ -14,6 +15,7 @@ public class LoginDetail {
         this.username = builder.username;
         this.password = builder.password;
         this.customer = builder.customer;
+        this.profile = builder.profile;
     }
 
     public String getUsername() {
@@ -28,10 +30,15 @@ public class LoginDetail {
         return customer;
     }
 
+    public Profile getProfile() {
+        return profile;
+    }
+
     public static class Builder{
         private String username;
         private String password;
         private Customer customer;
+        private Profile profile;
 
         public Builder username(String username){
             this.username = username;
@@ -45,6 +52,20 @@ public class LoginDetail {
 
         public Builder customer(Customer customer){
             this.customer = customer;
+            return this;
+        }
+
+        public Builder profile(Profile profile){
+            this.profile = profile;
+            return this;
+        }
+
+        public Builder copy(LoginDetail loginDetail){
+            this.username = loginDetail.username;
+            this.password = loginDetail.password;
+            this.customer = loginDetail.customer;
+            this.profile = loginDetail.profile;
+
             return this;
         }
 

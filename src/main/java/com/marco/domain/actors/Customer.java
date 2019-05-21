@@ -69,6 +69,16 @@ public class Customer implements Employee {
             return this;
         }
 
+        public Builder copy(Customer customer){
+            this.name = customer.name;
+            this.surname = customer.surname;
+            this.age = customer.age;
+            this.idNumber = customer.idNumber;
+            this.balance = customer.balance;
+
+            return this;
+        }
+
         public Customer build(){return new Customer(this);}
     }
 

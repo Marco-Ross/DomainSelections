@@ -12,7 +12,7 @@ public class BookingStatusFactoryTest {
     @Test
     public void getBookingStatus() {
         Date date = new Date();
-        BookingStatus bookingStatus = BookingStatusFactory.getBookingStatus(366, date);
+        BookingStatus bookingStatus = BookingStatusFactory.buildBookingStatus(366, date);
         assertNotNull(bookingStatus.getTimesBooked());
     }
 }

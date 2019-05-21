@@ -45,6 +45,14 @@ public class TicketClerk implements Employee{
             return this;
         }
 
+        public Builder copy(TicketClerk ticketClerk){
+            this.name = ticketClerk.name;
+            this.surname = ticketClerk.surname;
+            this.employeeNumber = ticketClerk.employeeNumber;
+
+            return this;
+        }
+
         public TicketClerk build(){return new TicketClerk(this);}
     }
 

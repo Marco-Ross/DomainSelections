@@ -34,6 +34,13 @@ public class Profile {
             return this;
         }
 
+        public Builder copy(Profile profile){
+            this.profileId = profile.profileId;
+            this.displayName = profile.displayName;
+
+            return this;
+        }
+
         public Profile build(){return new Profile(this);}
     }
 }
