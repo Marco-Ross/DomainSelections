@@ -66,7 +66,7 @@ public class EngineControllerTest {
     }
 
     @Test
-    public void d_getAllAnnouncers() {
+    public void d_getAllEngines() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("EngineHeader", "This is the getAll header");
 

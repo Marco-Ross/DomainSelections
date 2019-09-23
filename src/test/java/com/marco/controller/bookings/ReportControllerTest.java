@@ -66,7 +66,7 @@ public class ReportControllerTest {
     }
 
     @Test
-    public void d_getAllAnnouncers() {
+    public void d_getAllReports() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("ReportHeader", "This is the getAll header");
 

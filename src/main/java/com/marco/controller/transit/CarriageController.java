@@ -46,7 +46,7 @@ public class CarriageController {
     @GetMapping("/getAll")
     @ResponseBody
     public Set<Carriage> getAllCarriages(@RequestHeader HttpHeaders headers){
-        System.out.println(headers.getFirst("ScheduleHeader"));
+        System.out.println(headers.getFirst("CarriageHeader"));
         return service.getAllCarriages();
     }
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/railway/driver")
+@RequestMapping("/railway/actor/driver")
 public class DriverController {
     @Autowired
     @Qualifier("DriverServiceImpl")

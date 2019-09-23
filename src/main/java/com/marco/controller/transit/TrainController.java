@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Set;
 
 @RestController
@@ -32,13 +33,13 @@ public class TrainController {
 
     @DeleteMapping("/delete/{id}")
     @ResponseBody
-    public void delete(@PathVariable Integer id){
+    public void delete(@PathVariable String id){
         service.delete(id);
     }
 
     @GetMapping("/read/{id}")
     @ResponseBody
-    public Train read(@PathVariable Integer id){
+    public Train read(@PathVariable String id){
         return service.read(id);
     }
 

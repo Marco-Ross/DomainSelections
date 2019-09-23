@@ -2,12 +2,13 @@ package com.marco.factory.transit;
 
 import com.marco.domain.transit.Train;
 import com.marco.util.OverBook;
+import com.marco.util.RandomID;
 
 public class TrainFactory {
-    public static Train buildTrain(int trainNumber, int capacity, String trainName){
-        return new Train.Builder().trainNumber(trainNumber)
+    public static Train buildTrain(String trainNumber, int capacity){
+        return new Train.Builder().trainID(RandomID.generateRandomID())
                 .capacity(capacity + OverBook.overbookTrains())
-                .trainName(trainName)
+                .trainNumber(trainNumber)
                 .build();
     }
 }

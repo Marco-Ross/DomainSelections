@@ -66,9 +66,9 @@ public class RouteControllerTest {
     }
 
     @Test
-    public void d_getAllAnnouncers() {
+    public void d_getAllRoutes() {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("ReportHeader", "This is the getAll header");
+        headers.set("RouteHeader", "This is the getAll header");
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String>  responseEntity = restTemplate.exchange(baseURL + "/getAll", HttpMethod.GET, entity, String.class);

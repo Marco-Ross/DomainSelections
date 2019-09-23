@@ -10,11 +10,10 @@ public class TrainFactoryTest {
 
     @Test
     public void getTrain() {
-        int trainNumber = 2539;
         int capacity = 20;
-        String trainName = "Johnny";
+        String trainNumber = "2545";
 
-        Train train = TrainFactory.buildTrain(trainNumber, capacity, trainName);
+        Train train = TrainFactory.buildTrain(trainNumber, capacity);
         assertSame(40, train.getCapacity()); //using overbook util class
 
     }

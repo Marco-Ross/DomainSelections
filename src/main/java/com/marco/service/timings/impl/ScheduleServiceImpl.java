@@ -33,12 +33,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void delete(Integer schedule) {
-        this.repository.delete(schedule);
+    public void delete(String scheduleID) {
+        this.repository.delete(scheduleID);
     }
 
     @Override
-    public Schedule read(Integer train) {
-        return this.repository.read(train);
+    public Schedule read(String scheduleID) {
+        return this.repository.read(scheduleID);
     }
 }

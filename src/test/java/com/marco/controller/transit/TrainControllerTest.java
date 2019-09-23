@@ -2,7 +2,9 @@ package com.marco.controller.transit;
 
 import com.marco.domain.transit.Train;
 import com.marco.factory.transit.TrainFactory;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -24,11 +26,15 @@ public class TrainControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
     private String baseURL = "http://localhost:8080/railway/train";
+    private Train train;
+
+    @Before
+    public void setUp() throws Exception {
+        train = TrainFactory.buildTrain("2530",200);
+    }
 
     @Test
     public void a_create() {
-        Train train = TrainFactory.buildTrain(2553, 200, "SpeedyTrain");
-
         ResponseEntity<Train> postResponse = restTemplate.postForEntity(baseURL + "/create", train, Train.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
@@ -36,37 +42,37 @@ public class TrainControllerTest {
 
     @Test
     public void c_update() {
-        Train getTrain = restTemplate.getForObject(baseURL + "/read/2553", Train.class);
-        Train updated = new Train.Builder().copy(getTrain).trainName("Barbra").build();
+        Train getTrain = restTemplate.getForObject(baseURL + "/read/2530", Train.class);
+        Train updated = new Train.Builder().copy(getTrain).capacity(30).build();
         restTemplate.put(baseURL + "/update", updated);
 
-        Train updatedTrain = restTemplate.getForObject(baseURL + "/read/2553", Train.class);
+        Train updatedTrain = restTemplate.getForObject(baseURL + "/read/2530", Train.class);
 
         assertNotNull(updatedTrain);
-        assertEquals(updated.getTrainName(), updatedTrain.getTrainName());
+        assertEquals(updated.getTrainNumber(), updatedTrain.getTrainNumber());
     }
 
     @Test
     public void e_delete() {
-        Train getTrain = restTemplate.getForObject(baseURL + "/read/2553", Train.class);
+        Train getTrain = restTemplate.getForObject(baseURL + "/read/2530", Train.class);
         assertNotNull(getTrain);
-        assertEquals(2553, getTrain.getTrainNumber());
+        assertEquals("2530", getTrain.getTrainNumber());
 
         restTemplate.delete(baseURL + "/delete/" + getTrain.getTrainNumber());
-        getTrain = restTemplate.getForObject(baseURL + "/read/2553", Train.class);
+        getTrain = restTemplate.getForObject(baseURL + "/read/2530", Train.class);
 
         assertNull(getTrain);
     }
 
     @Test
     public void b_read() {
-        ResponseEntity<Train> trainResponseEntity = restTemplate.getForEntity(baseURL + "/read/2553", Train.class);
+        ResponseEntity<Train> trainResponseEntity = restTemplate.getForEntity(baseURL + "/read/" + train.getTrainNumber(), Train.class);
         assertNotNull(trainResponseEntity.getBody());
-        assertEquals(2553, trainResponseEntity.getBody().getTrainNumber());
+        assertEquals("2530", trainResponseEntity.getBody().getTrainNumber());
     }
 
     @Test
-    public void d_getAllAnnouncers() {
+    public void d_getTrains() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("TrainHeader", "This is the getAll header");
 

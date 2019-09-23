@@ -6,6 +6,8 @@ import com.marco.factory.transit.TrainFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -20,9 +22,12 @@ public class ScheduleFactoryTest {
         arrive.set(0,0,0,5,0,0);
         Date departureTime = depart.getTime();
         Date arrivalTime = arrive.getTime();
-        Train train = TrainFactory.buildTrain(1522, 30, "Peter");
 
-        Schedule schedule = ScheduleFactory.buildSchedule(departureTime, arrivalTime, train);
-        Assert.assertEquals(arrivalTime, schedule.getArrival());
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String departureString = formatter.format(departureTime);
+        String arrivalString = formatter.format(arrivalTime);
+
+        Schedule schedule = ScheduleFactory.buildSchedule(departureString, arrivalString);
+        Assert.assertEquals(arrivalString, schedule.getArrival());
     }
 }

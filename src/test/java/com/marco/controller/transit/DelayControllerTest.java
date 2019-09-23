@@ -69,7 +69,7 @@ public class DelayControllerTest {
     }
 
     @Test
-    public void d_getAllAnnouncers() {
+    public void d_getAllDelays() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("DelayHeader", "This is the getAll header");
 

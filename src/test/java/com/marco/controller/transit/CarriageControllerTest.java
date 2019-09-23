@@ -66,7 +66,7 @@ public class CarriageControllerTest {
     }
 
     @Test
-    public void d_getAllAnnouncers() {
+    public void d_getAllCarriages() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("CarriageHeader", "This is the getAll header");
 

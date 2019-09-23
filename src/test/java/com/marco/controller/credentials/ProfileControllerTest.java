@@ -66,7 +66,7 @@ public class ProfileControllerTest {
     }
 
     @Test
-    public void d_getAllAnnouncers() {
+    public void d_getAllProfiles() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("ProfileHeader", "This is the getAll header");
 

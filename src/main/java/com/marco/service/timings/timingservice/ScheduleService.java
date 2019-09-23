@@ -6,6 +6,6 @@ import com.marco.service.ServiceGI;
 
 import java.util.ArrayList;
 
-public interface ScheduleService extends ServiceGI<Schedule, Integer> {
+public interface ScheduleService extends ServiceGI<Schedule, String> {
     ArrayList<Schedule> getAllSchedules();
 }

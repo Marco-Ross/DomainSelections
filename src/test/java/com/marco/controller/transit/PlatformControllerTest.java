@@ -66,7 +66,7 @@ public class PlatformControllerTest {
     }
 
     @Test
-    public void d_getAllAnnouncers() {
+    public void d_getAllPlatforms() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("PlatformHeader", "This is the getAll header");
 

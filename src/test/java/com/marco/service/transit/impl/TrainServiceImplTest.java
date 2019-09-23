@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.HashMap;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -29,7 +30,7 @@ public class TrainServiceImplTest {
 
     private Train getRepo(){
         for(Train trainA : service.getAllTrains()){
-            if(trainA.getTrainNumber() == train.getTrainNumber()){
+            if(trainA.getTrainNumber().equals(train.getTrainNumber())){
                 return trainA;
             }
         }
@@ -38,13 +39,15 @@ public class TrainServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        train = TrainFactory.buildTrain(2553, 200, "Tony");
+        if(service.getAllTrains().size() == 0){ train = TrainFactory.buildTrain( "SpeedyTrain", 200);}
+        else{train = service.getAllTrains().iterator().next();}
+
     }
 
     @Test
     public void d_getAllTrains() {
-        Set<Train> arrayList = service.getAllTrains();
-        Assert.assertEquals(1, arrayList.size());
+        Set<Train> trainMap = service.getAllTrains();
+        Assert.assertEquals(1, trainMap.size());
     }
 
     @Test
@@ -69,13 +72,13 @@ public class TrainServiceImplTest {
     @Test
     public void e_delete() {
         service.delete(train.getTrainNumber());
-        Set<Train> trains = service.getAllTrains();
-        Assert.assertEquals(0, trains.size());
+        Set<Train> trainMap = service.getAllTrains();
+        Assert.assertEquals(0, trainMap.size());
     }
 
     @Test
     public void b_read() {
-        Train trainRead = service.read(2553);
+        Train trainRead = service.read(getRepo().getTrainNumber());
         Assert.assertEquals(train.getTrainNumber(), trainRead.getTrainNumber());
     }
 }

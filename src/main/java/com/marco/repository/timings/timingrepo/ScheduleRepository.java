@@ -6,6 +6,6 @@ import com.marco.repository.RepositoryGI;
 
 import java.util.ArrayList;
 
-public interface ScheduleRepository extends RepositoryGI<Schedule, Integer> {
+public interface ScheduleRepository extends RepositoryGI<Schedule, String> {
     ArrayList<Schedule> getAllSchedules();
 }

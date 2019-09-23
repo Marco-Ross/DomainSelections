@@ -86,7 +86,7 @@ public class OnlineBookingControllerTest {
     }
 
     @Test
-    public void d_getAllAnnouncers() {
+    public void d_getAllOnlineBookings() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("OnlineBookingHeader", "This is the getAll header");
 

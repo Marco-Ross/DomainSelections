@@ -28,7 +28,7 @@ public class DoorManRepositoryImpl implements DoorManRepository {
         return this.doorMEN.get(doorMan.getEmployeeNumber());
     }
 
-    @Override //account composed of loginDetail
+    @Override
     public DoorMan update(DoorMan doorMan) {
         this.doorMEN.replace(doorMan.getEmployeeNumber(), doorMan);
         return this.doorMEN.get(doorMan.getEmployeeNumber());

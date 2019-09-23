@@ -1,34 +1,33 @@
 package com.marco.domain.transit;
 
 public class Train {
-    private int trainNumber;
+    private String trainID;
     private int capacity;
-    private String trainName;
-
+    private String trainNumber;
 
     private Train(){}
 
     private Train(Builder builder){
-        this.trainNumber = builder.trainNumber;
+        this.trainID = builder.trainID;
         this.capacity = builder.capacity;
-        this.trainName = builder.trainName;
+        this.trainNumber = builder.trainNumber;
     }
 
-    public int getTrainNumber(){return trainNumber;}
+    public String getTrainID(){return trainID;}
 
     public int getCapacity(){return capacity;}
 
-    public String getTrainName(){
-        return trainName;
+    public String getTrainNumber(){
+        return trainNumber;
     }
 
     public static class Builder{
-        private int trainNumber;
+        private String trainID;
         private int capacity;
-        private String trainName;
+        private String trainNumber;
 
-        public Builder trainNumber(int trainNumber){
-            this.trainNumber = trainNumber;
+        public Builder trainID(String trainID){
+            this.trainID = trainID;
             return this;
         }
 
@@ -37,28 +36,20 @@ public class Train {
             return this;
         }
 
-        public Builder trainName(String trainName){
-            this.trainName = trainName;
+        public Builder trainNumber(String trainNumber){
+            this.trainNumber = trainNumber;
             return this;
         }
 
         public Builder copy(Train train){
-            this.trainNumber = train.trainNumber;
+            this.trainID = train.trainID;
             this.capacity = train.capacity;
-            this.trainName = train.trainName;
+            this.trainNumber = train.trainNumber;
 
             return this;
         }
 
         public Train build(){return new Train(this);}
-    }
-
-    @Override
-    public String toString() {
-        return "Train{" +
-                "trainNumber=" + trainNumber +
-                ", capacity=" + capacity +
-                '}';
     }
 }
 

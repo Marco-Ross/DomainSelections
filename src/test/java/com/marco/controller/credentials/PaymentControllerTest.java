@@ -71,7 +71,7 @@ public class PaymentControllerTest {
     }
 
     @Test
-    public void d_getAllAnnouncers() {
+    public void d_getAllPayments() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("PaymentHeader", "This is the getAll header");
 

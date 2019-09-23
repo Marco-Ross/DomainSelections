@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,7 +32,7 @@ public class ScheduleRepositoryImplTest {
 
     private Schedule getRepo(){
         for(Schedule scheduleA : repository.getAllSchedules()){
-            if(scheduleA.getTrain().getTrainNumber() == schedule.getTrain().getTrainNumber()){
+            if(scheduleA.getScheduleID().equals(schedule.getScheduleID())){
                 return scheduleA;
             }
         }
@@ -46,9 +48,12 @@ public class ScheduleRepositoryImplTest {
         departureTime = depart.getTime();
         Date arrivalTime = arrive.getTime();
 
-        Train train = TrainFactory.buildTrain(2553, 145, "Jesse");
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String departureString = formatter.format(departureTime);
+        String arrivalString = formatter.format(arrivalTime);
 
-        schedule = ScheduleFactory.buildSchedule(departureTime, arrivalTime, train);
+        if(repository.getAllSchedules().size() == 0){ schedule = ScheduleFactory.buildSchedule(departureString, arrivalString);}
+        else{schedule = repository.getAllSchedules().get(0);}
     }
 
     @Test
@@ -71,24 +76,25 @@ public class ScheduleRepositoryImplTest {
         depart.set(0, 0, 0,4,30,0);
         departureTime = depart.getTime();
 
-        Schedule updated = new Schedule.Builder().copy(getRepo()).departure(departureTime).build();
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String departureString = formatter.format(departureTime);
 
-        this.repository.update(updated);
+        Schedule updated = this.repository.update(new Schedule.Builder().copy(getRepo()).departure(departureString).build());
 
-        Assert.assertEquals(departureTime, updated.getDeparture());
+        Assert.assertEquals(departureString, updated.getDeparture());
         System.out.println("Schedule updated");
     }
 
     @Test
     public void e_delete() {
-        repository.delete(schedule.getTrain().getTrainNumber());
+        repository.delete(schedule.getScheduleID());
         ArrayList<Schedule> schedules = repository.getAllSchedules();
         Assert.assertEquals(0, schedules.size());
     }
 
     @Test
     public void b_read() {
-        Schedule scheduleRead = repository.read(schedule.getTrain().getTrainNumber());
-        Assert.assertEquals(schedule.getTrain().getTrainNumber(), scheduleRead.getTrain().getTrainNumber());
+        Schedule scheduleRead = repository.read(schedule.getScheduleID());
+        Assert.assertEquals(schedule.getScheduleID(), scheduleRead.getScheduleID());
     }
 }

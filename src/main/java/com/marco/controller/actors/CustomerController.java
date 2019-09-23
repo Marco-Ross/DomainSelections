@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/railway/customer")
+@RequestMapping("/railway/actor/customer")
 public class CustomerController {
     @Autowired
     @Qualifier("CustomerServiceImpl")
@@ -21,7 +21,6 @@ public class CustomerController {
     @PostMapping("/create")
     @ResponseBody
     public Customer create(@RequestBody Customer customer, @RequestHeader HttpHeaders headers){
-        System.out.println(headers);
         return service.create(customer);
     }
 

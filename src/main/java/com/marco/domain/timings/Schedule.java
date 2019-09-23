@@ -1,13 +1,11 @@
 package com.marco.domain.timings;
 
-import com.marco.domain.transit.Train;
-
 import java.util.Date;
 
 public class Schedule {
-    private Date arrival;
-    private Date departure;
-    private Train train;
+    private String scheduleID;
+    private String arrival;
+    private String departure;
 
     private Schedule() {
     }
@@ -15,45 +13,45 @@ public class Schedule {
     private Schedule(Builder builder){
         this.departure = builder.departure;
         this.arrival = builder.arrival;
-        this.train = builder.train;
+        this.scheduleID = builder.scheduleID;
     }
 
-    public Date getArrival() {
+    public String getArrival() {
         return arrival;
     }
 
-    public Date getDeparture() {
+    public String getDeparture() {
         return departure;
     }
 
-    public Train getTrain(){
-        return train;
+    public String getScheduleID() {
+        return scheduleID;
     }
 
     public static class Builder{
-        private Date arrival;
-        private Date departure;
-        private Train train;
+        private String scheduleID;
+        private String arrival;
+        private String departure;
 
-        public Builder departure(Date departure){
+        public Builder scheduleID(String scheduleID){
+            this.scheduleID = scheduleID;
+            return this;
+        }
+
+        public Builder departure(String departure){
             this.departure = departure;
             return this;
         }
 
-        public Builder arrival(Date arrival){
+        public Builder arrival(String arrival){
             this.arrival = arrival;
             return this;
         }
 
-        public Builder train(Train train){
-            this.train = train;
-            return this;
-        }
-
         public Builder copy(Schedule schedule){
+            this.scheduleID = schedule.scheduleID;
             this.arrival = schedule.arrival;
             this.departure = schedule.departure;
-            this.train = schedule.train;
 
             return this;
         }

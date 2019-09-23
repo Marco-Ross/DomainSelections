@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/railway/ticketchecker")
+@RequestMapping("/railway/actor/ticketchecker")
 public class TicketCheckerController {
     @Autowired
     @Qualifier("TicketCheckerServiceImpl")
@@ -46,7 +46,7 @@ public class TicketCheckerController {
     @GetMapping("/getAll")
     @ResponseBody
     public ArrayList<TicketChecker> getAllTicketCheckers(@RequestHeader HttpHeaders headers){
-        System.out.println(headers.getFirst("SecurityHeader"));
+        System.out.println(headers.getFirst("TicketCheckerHeader"));
         return service.getAllTicketCheckers();
     }
 }

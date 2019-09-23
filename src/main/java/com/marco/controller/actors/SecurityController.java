@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/railway/security")
+@RequestMapping("/railway/actor/security")
 public class SecurityController {
     @Autowired
     @Qualifier("SecurityServiceImpl")

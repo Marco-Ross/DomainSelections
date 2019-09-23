@@ -66,7 +66,7 @@ public class StationControllerTest {
     }
 
     @Test
-    public void d_getAllAnnouncers() {
+    public void d_getAllStations() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("StationHeader", "This is the getAll header");
 

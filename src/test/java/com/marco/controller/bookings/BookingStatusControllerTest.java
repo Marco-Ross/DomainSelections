@@ -85,7 +85,7 @@ public class BookingStatusControllerTest {
     }
 
     @Test
-    public void d_getAllAnnouncers() {
+    public void d_getAllBookingStatus() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("BookingStatusHeader", "This is the getAll header");
 

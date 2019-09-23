@@ -33,8 +33,9 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
 
     @Override
     public Schedule update(Schedule schedule) {
+
         for(int i = 0; i<schedules.size();i++){
-            if(schedule.getTrain().getTrainNumber() == schedules.get(i).getTrain().getTrainNumber()){
+            if(schedule.getScheduleID().equals(schedules.get(i).getScheduleID())){
                 this.schedules.set(i, schedule);
                 return schedule;
             }
@@ -43,9 +44,9 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     @Override
-    public void delete(Integer trainNumber) {
+    public void delete(String scheduleID) {
         for(Schedule scheduleA : schedules){
-            if(trainNumber == scheduleA.getTrain().getTrainNumber()){
+            if(scheduleID.equals(scheduleA.getScheduleID())){
                 this.schedules.remove(scheduleA);
                 break;
             }
@@ -53,9 +54,9 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     @Override
-    public Schedule read(Integer trainNumber) {
+    public Schedule read(String scheduleID) {
         for(Schedule scheduleA : schedules){
-            if(trainNumber == scheduleA.getTrain().getTrainNumber()){
+            if(scheduleID.equals(scheduleA.getScheduleID())){
                 return scheduleA;
             }
         }

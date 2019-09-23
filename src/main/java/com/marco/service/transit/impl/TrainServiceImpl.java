@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 
 @Service("TrainServiceImpl")
@@ -33,12 +34,12 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public void delete(Integer train) {
-        this.repository.delete(train);
+    public void delete(String trainNumber) {
+        this.repository.delete(trainNumber);
     }
 
     @Override
-    public Train read(Integer train) {
-        return this.repository.read(train);
+    public Train read(String trainNumber) {
+        return this.repository.read(trainNumber);
     }
 }

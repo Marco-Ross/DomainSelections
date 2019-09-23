@@ -9,10 +9,7 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.*;
@@ -23,13 +20,15 @@ import static org.junit.Assert.*;
 public class SecurityControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
-    private String baseURL = "http://localhost:8080/railway/security";
+    private String baseURL = "http://localhost:8080/railway/actor/security";
 
     @Test
     public void a_create() {
         Security security = SecurityFactory.buildSecurity("cinder", "block", 48);
 
-        ResponseEntity<Security> postResponse = restTemplate.postForEntity(baseURL + "/create", security, Security.class); //USE EXCHANGE FOR NEXT CREATE
+        ResponseEntity<Security> postResponse = restTemplate.withBasicAuth("Kaylin", "pass02").postForEntity(baseURL + "/create", security, Security.class); //USE EXCHANGE FOR NEXT CREATE
+
+        assertEquals(HttpStatus.OK, postResponse.getStatusCode());
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
     }
@@ -38,7 +37,7 @@ public class SecurityControllerTest {
     public void c_update() {
         Security security = restTemplate.getForObject(baseURL + "/read/48", Security.class); //Reading announcer with empNumber 55
         Security updated = new Security.Builder().copy(security).surname("poopie").build();
-        restTemplate.put(baseURL + "/update", updated); //Void method(put) to link to (/update) EndPoint and update with new Announcer object
+        restTemplate.withBasicAuth("Kaylin", "pass02").put(baseURL + "/update", updated); //Void method(put) to link to (/update) EndPoint and update with new Announcer object
 
         Security updatedSecurity = restTemplate.getForObject(baseURL + "/read/48", Security.class); //Reading announcer with empNumber 55 to check if updated
 
@@ -52,7 +51,7 @@ public class SecurityControllerTest {
         assertNotNull(security);
         assertEquals(48, security.getEmployeeNumber());
 
-        restTemplate.delete(baseURL + "/delete/" + security.getEmployeeNumber());
+        restTemplate.withBasicAuth("Kaylin", "pass02").delete(baseURL + "/delete/" + security.getEmployeeNumber());
         security = restTemplate.getForObject(baseURL + "/read/48", Security.class);
 
         assertNull(security);
@@ -60,18 +59,20 @@ public class SecurityControllerTest {
 
     @Test
     public void b_read() {
-        ResponseEntity<Security> securityResponseEntity = restTemplate.getForEntity(baseURL + "/read/48", Security.class);
+        ResponseEntity<Security> securityResponseEntity = restTemplate.withBasicAuth("Marco", "pass01").getForEntity(baseURL + "/read/48", Security.class);
         assertNotNull(securityResponseEntity.getBody());
         assertEquals(48, securityResponseEntity.getBody().getEmployeeNumber());
     }
 
     @Test
-    public void d_getAllAnnouncers() {
+    public void d_getAllSecurity() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("SecurityHeader", "This is the getAll header");
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<String>  responseEntity = restTemplate.exchange(baseURL + "/getAll", HttpMethod.GET, entity, String.class);
+        ResponseEntity<String>  responseEntity = restTemplate.withBasicAuth("Marco", "pass02").exchange(baseURL + "/getAll", HttpMethod.GET, entity, String.class);
         System.out.println(responseEntity);
+
+        assertEquals(HttpStatus.UNAUTHORIZED, responseEntity.getStatusCode());
     }
 }

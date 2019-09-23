@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/railway/manager")
+@RequestMapping("/railway/actor/manager")
 public class ManagerController {
     @Autowired
     @Qualifier("ManagerServiceImpl")
