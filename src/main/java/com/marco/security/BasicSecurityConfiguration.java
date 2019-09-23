@@ -34,9 +34,7 @@ public class BasicSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .httpBasic()
             .and()
                 .authorizeRequests()
-                .antMatchers("/railway/actor/**/create").hasRole("ADMIN")
-                .antMatchers("/railway/actor/**/delete").hasRole("ADMIN")
-                .antMatchers("/railway/actor/**/update").hasRole("ADMIN")
+                .antMatchers("/railway/actor/**/create", "/railway/actor/**/delete", "/railway/actor/**/update").hasRole("ADMIN")
             .and()
                 .csrf().disable();
     }
