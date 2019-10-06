@@ -15,8 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
+import java.util.Optional;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -38,7 +37,7 @@ public class TicketCheckerServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        ticketChecker = TicketCheckerFactory.buildTicketChecker("marco", "ross", 3654);
+        ticketChecker = TicketCheckerFactory.buildTicketChecker(3654, "marco", "ross");
     }
 
     @Test
@@ -50,7 +49,7 @@ public class TicketCheckerServiceImplTest {
     @Test
     public void a_create() {
         TicketChecker ticketCheckerTest = this.service.create(ticketChecker);
-        Assert.assertEquals(ticketChecker, ticketCheckerTest);
+        Assert.assertEquals(ticketChecker.getEmployeeNumber(), ticketCheckerTest.getEmployeeNumber());
     }
 
     @Test
@@ -75,7 +74,8 @@ public class TicketCheckerServiceImplTest {
 
     @Test
     public void b_read() {
-        TicketChecker ticketCheckersRead = service.read(3654);
-        Assert.assertEquals(ticketChecker.getEmployeeNumber(), ticketCheckersRead.getEmployeeNumber());
+        Optional<TicketChecker> ticketCheckersRead = service.read(3654);
+        Assert.assertTrue(ticketCheckersRead.isPresent());
+        Assert.assertEquals(ticketChecker.getEmployeeNumber(), ticketCheckersRead.get().getEmployeeNumber());
     }
 }

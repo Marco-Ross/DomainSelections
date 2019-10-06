@@ -1,6 +1,11 @@
 package com.marco.domain.transit;
 
+import javax.persistence.Id;
+import javax.persistence.Entity;
+
+@Entity
 public class Engine {
+    @Id
     private int engineNumber;
     private String modelName;
 

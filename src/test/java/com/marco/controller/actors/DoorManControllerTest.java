@@ -24,7 +24,7 @@ public class DoorManControllerTest {
 
     @Test
     public void a_create() {
-        DoorMan doorMan = DoorManFactory.buildDoorMan("jason", "love", 32);
+        DoorMan doorMan = DoorManFactory.buildDoorMan(32, "jason", "love");
 
         ResponseEntity<DoorMan> postResponse = restTemplate.withBasicAuth("Kaylin", "pass02").postForEntity(baseURL + "/create", doorMan, DoorMan.class);
 

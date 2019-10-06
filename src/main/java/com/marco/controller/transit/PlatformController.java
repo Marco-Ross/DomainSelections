@@ -1,15 +1,13 @@
 package com.marco.controller.transit;
 
-import com.marco.domain.transit.Engine;
 import com.marco.domain.transit.Platform;
-import com.marco.service.transit.transitservice.EngineService;
 import com.marco.service.transit.transitservice.PlatformService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -39,7 +37,7 @@ public class PlatformController {
 
     @GetMapping("/read/{id}")
     @ResponseBody
-    public Platform read(@PathVariable Integer id){
+    public Optional read(@PathVariable Integer id){
         return service.read(id);
     }
 

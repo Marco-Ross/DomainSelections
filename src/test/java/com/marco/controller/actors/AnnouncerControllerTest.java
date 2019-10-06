@@ -26,7 +26,7 @@ public class AnnouncerControllerTest {
 
     @Test
     public void a_create() {
-        Announcer announcer = AnnouncerFactory.buildAnnouncer("marco", "ross", 55);
+        Announcer announcer = AnnouncerFactory.buildAnnouncer(55, "marco", "ross");
         //Create header to send username and password
         ResponseEntity<Announcer> postResponse = restTemplate.withBasicAuth("Kaylin", "pass02").postForEntity(baseURL + "/create", announcer, Announcer.class); //USE EXCHANGE FOR NEXT CREATE
 
@@ -45,7 +45,7 @@ public class AnnouncerControllerTest {
 
         //assertTrue(HttpStatus.FORBIDDEN);
         assertNotNull(updatedAnnouncer);
-        assertEquals("newRoss" + "SecondImpl", updatedAnnouncer.getSurname());
+        assertEquals("newRoss", updatedAnnouncer.getSurname());
     }
 
     @Test

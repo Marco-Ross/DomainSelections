@@ -12,9 +12,8 @@ public class DelayFactoryTest {
     public void getDelay() {
         int delayId = 15;
         String description = "man killed";
-        Station station = StationFactory.buildStation("stikland", 12);
 
-        Delay delay = DelayFactory.buildDelay(delayId, station, description);
+        Delay delay = DelayFactory.buildDelay(delayId, description);
 
         assertSame(delayId, delay.getDelayId());
 

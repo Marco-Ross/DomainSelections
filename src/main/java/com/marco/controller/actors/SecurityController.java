@@ -1,15 +1,13 @@
 package com.marco.controller.actors;
 
-import com.marco.domain.actors.Manager;
 import com.marco.domain.actors.Security;
-import com.marco.service.actors.actorservice.ManagerService;
 import com.marco.service.actors.actorservice.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -39,7 +37,7 @@ public class SecurityController {
 
     @GetMapping("/read/{id}")
     @ResponseBody
-    public Security read(@PathVariable Integer id){
+    public Optional read(@PathVariable Integer id){
         return service.read(id);
     }
 

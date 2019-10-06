@@ -1,25 +1,14 @@
 package com.marco.controller.timings;
 
-import com.marco.domain.credentials.Profile;
-import com.marco.domain.timings.NewSchedule;
+import com.marco.domain.timings.clientobject.NewSchedule;
 import com.marco.domain.timings.Schedule;
-import com.marco.domain.timings.TrainSchedule;
+import com.marco.domain.timings.compositeclass.TrainSchedule;
 import com.marco.domain.transit.Train;
-import com.marco.factory.timings.NewScheduleFactory;
 import com.marco.factory.timings.ScheduleFactory;
 import com.marco.factory.timings.TrainScheduleFactory;
-import com.marco.factory.transit.TrainFactory;
-import com.marco.repository.timings.timingrepo.ScheduleRepository;
-import com.marco.repository.timings.timingrepo.TrainScheduleRepository;
-import com.marco.repository.transit.impl.TrainRepositoryImpl;
-import com.marco.repository.transit.transitrepo.TrainRepository;
-import com.marco.service.credentials.credentialservice.ProfileService;
 import com.marco.service.timings.impl.ScheduleServiceImpl;
-import com.marco.service.timings.impl.TrainScheduleServiceImpl;
-import com.marco.service.timings.timingservice.ScheduleService;
 import com.marco.service.timings.timingservice.TrainScheduleService;
 import com.marco.service.transit.impl.TrainServiceImpl;
-import com.marco.service.transit.transitservice.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
@@ -31,27 +20,14 @@ import java.util.ArrayList;
 @RequestMapping("/railway/schedule")
 public class ScheduleController {
     @Autowired
-    @Qualifier("ScheduleServiceImpl")
-    private ScheduleService scheduleService;
+    private ScheduleServiceImpl scheduleService;
 
     @Autowired
     @Qualifier("TrainScheduleService")
     private TrainScheduleService trainScheduleService;
 
     @Autowired
-    @Qualifier("TrainServiceImpl")
-    private TrainService trainService;
-
-    @Autowired
-    @Qualifier("ScheduleRepoImpl")
-    private ScheduleRepository scheduleRepository;
-
-    @Autowired
-    @Qualifier("TrainRepoImpl")
-    private TrainRepository trainRepository;
-
-    private Schedule saveSchedule;
-    private Train saveTrain;
+    private TrainServiceImpl trainService;
 
     @PostMapping("/create")
     @ResponseBody
@@ -59,62 +35,47 @@ public class ScheduleController {
         Schedule schedule = ScheduleFactory.buildSchedule(newSchedule.getDeparture(), newSchedule.getArrival());
         Schedule savedSchedule = scheduleService.create(schedule);
 
-        TrainSchedule trainSchedule = TrainScheduleFactory.buildTrainSchedule(schedule.getScheduleID(), newSchedule.getTrainNumber());
+        Train train = trainService.getTrainWithTrainNumber(newSchedule.getTrainNumber());
 
+        TrainSchedule trainSchedule = TrainScheduleFactory.buildTrainSchedule(schedule.getScheduleID(), train.getTrainID());
         trainScheduleService.create(trainSchedule);
+
         return savedSchedule;
     }
 
-    @PostMapping("/old")
-    @ResponseBody
-    private void getInfoForUpdate(@RequestBody NewSchedule newSchedule){
-        for (TrainSchedule trainSchedule : trainScheduleService.getAllTrainSchedules()) {
-            if (newSchedule.getTrainNumber().equals(trainSchedule.getTrainNumber())) {
-                for (Schedule schedule : scheduleRepository.getAllSchedules()) {
-                    if (schedule.getScheduleID().equals(trainSchedule.getScheduleID())) {
-                        for(Train train : trainRepository.getAllTrains()){
-                            if(train.getTrainNumber().equals(newSchedule.getTrainNumber())){
-                                saveSchedule = schedule;
-                                saveTrain = train;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     @PutMapping("/update")
-    @ResponseBody //Use Json mapper to add both old and new objects to body instead of having above method and sending info to separate calls.
+    @ResponseBody
     public Train update(@RequestBody NewSchedule newSchedule){
-        Schedule schedule = new Schedule.Builder().copy(saveSchedule).departure(newSchedule.getDeparture()).arrival(newSchedule.getArrival()).build();
-        Train train = new Train.Builder().copy(saveTrain).trainNumber(newSchedule.getTrainNumber()).capacity(newSchedule.getCapacity()).build();
-        TrainSchedule trainSchedule = TrainScheduleFactory.buildTrainSchedule(schedule.getScheduleID(), train.getTrainNumber());
+        Schedule scheduleRequested = scheduleService.getScheduleWithTrainNumber(newSchedule.getTrainNumber());
+        Train trainRequested = trainService.getTrainWithTrainNumber(newSchedule.getTrainNumber());
+
+        Schedule schedule = new Schedule.Builder().copy(scheduleRequested).departure(newSchedule.getDeparture()).arrival(newSchedule.getArrival()).build();
+        Train train = new Train.Builder().copy(trainRequested).capacity(newSchedule.getCapacity()).build();
 
         Train t= trainService.update(train);
         scheduleService.update(schedule);
-        trainScheduleService.update(trainSchedule);
 
         return t;
     }
 
     @DeleteMapping("/delete/{trainNumber}")
     @ResponseBody
-    public void delete(@PathVariable String trainNumber){
-        scheduleService.delete(saveSchedule.getScheduleID());
+    public void delete(@PathVariable Integer trainNumber){
+        Schedule schedule = scheduleService.getScheduleWithTrainNumber(trainNumber);
+        scheduleService.delete(schedule.getScheduleID());
         trainService.delete(trainNumber);
-        trainScheduleService.delete(saveSchedule.getScheduleID());
+        trainScheduleService.delete(schedule.getScheduleID());
     }
 
-    @GetMapping("/read/{time}")
+    @GetMapping("/readTime/{time}")
     @ResponseBody
-    public NewSchedule read(@PathVariable String time){
+    public NewSchedule readTime(@PathVariable String time){
         return trainScheduleService.readTime(time);
     }
 
     @GetMapping("/readTrain/{trainNumber}")
     @ResponseBody
-    public NewSchedule readTrain(@PathVariable String trainNumber){
+    public NewSchedule readTrain(@PathVariable int trainNumber){
         return trainScheduleService.readTrain(trainNumber);
     }
 

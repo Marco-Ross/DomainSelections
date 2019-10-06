@@ -24,7 +24,7 @@ public class TicketCheckerControllerTest {
 
     @Test
     public void a_create() {
-        TicketChecker ticketChecker = TicketCheckerFactory.buildTicketChecker("cinder", "block", 48);
+        TicketChecker ticketChecker = TicketCheckerFactory.buildTicketChecker(48, "cinder", "block");
 
         ResponseEntity<TicketChecker> postResponse = restTemplate.withBasicAuth("Kaylin", "pass02").postForEntity(baseURL + "/create", ticketChecker, TicketChecker.class); //USE EXCHANGE FOR NEXT CREATE
 

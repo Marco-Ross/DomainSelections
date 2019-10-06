@@ -13,7 +13,7 @@ public class ReportFactoryTest {
         double revenue = 400.50;
         double profit = 300;
 
-        Report report = ReportFactory.buildReport(revenue, profit, reportID);
+        Report report = ReportFactory.buildReport(reportID, revenue, profit);
         assertEquals(profit, report.getProfit(), 0.1);
     }
 }

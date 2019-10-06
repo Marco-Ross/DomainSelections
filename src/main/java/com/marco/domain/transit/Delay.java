@@ -1,24 +1,23 @@
 package com.marco.domain.transit;
 
+import javax.persistence.Id;
+import javax.persistence.Entity;
+
+@Entity
 public class Delay {
+    @Id
     private int delayId;
-    private Station station;
     private String description;
 
     private Delay(){}
 
     private Delay(Builder builder){
         this.delayId = builder.delayId;
-        this.station = builder.station;
         this.description = builder.description;
     }
 
     public int getDelayId() {
         return delayId;
-    }
-
-    public Station getStation() {
-        return station;
     }
 
     public String getDescription() {
@@ -27,16 +26,10 @@ public class Delay {
 
     public static class Builder{
         private int delayId;
-        private Station station;
         private String description;
 
         public Builder delayId(int delayId){
             this.delayId = delayId;
-            return this;
-        }
-
-        public Builder station(Station station){
-            this.station = station;
             return this;
         }
 
@@ -47,7 +40,6 @@ public class Delay {
 
         public Builder copy(Delay delay){
             this.delayId = delay.delayId;
-            this.station = delay.station;
             this.description = delay.description;
 
             return this;

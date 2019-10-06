@@ -14,9 +14,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Optional;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -38,7 +37,7 @@ public class DriverServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        driver = DriverFactory.buildDriver("marco", "ross", 3654);
+        driver = DriverFactory.buildDriver(3654,"marco", "ross");
 
     }
 
@@ -51,7 +50,7 @@ public class DriverServiceImplTest {
     @Test
     public void a_create() {
         Driver driverTest = this.service.create(driver);
-        Assert.assertEquals(driver, driverTest);
+        Assert.assertEquals(driver.getEmployeeNumber(), driverTest.getEmployeeNumber());
     }
 
     @Test
@@ -75,7 +74,8 @@ public class DriverServiceImplTest {
 
     @Test
     public void b_read() {
-        Driver driverRead = service.read(3654);
-        Assert.assertEquals(driver.getEmployeeNumber(), driverRead.getEmployeeNumber());
+        Optional<Driver> driverRead = service.read(3654);
+        Assert.assertTrue(driverRead.isPresent());
+        Assert.assertEquals(driver.getEmployeeNumber(), driverRead.get().getEmployeeNumber());
     }
 }

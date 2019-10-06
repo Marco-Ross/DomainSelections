@@ -1,8 +1,6 @@
 package com.marco.controller.credentials;
 
-import com.marco.domain.actors.Customer;
 import com.marco.domain.credentials.Payment;
-import com.marco.factory.actors.CustomerFactory;
 import com.marco.factory.credentials.PaymentFactory;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -32,8 +30,7 @@ public class PaymentControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        Customer customer = CustomerFactory.buildCustomer("marco", "ross", 23, "12345678910", 200);
-        payment = PaymentFactory.buildPayment(50, customer);
+        payment = PaymentFactory.buildPayment(12, 50, "12345678910");
     }
 
     @Test
@@ -51,23 +48,23 @@ public class PaymentControllerTest {
 
     @Test
     public void e_delete() {
-        ResponseEntity<Payment> paymentResponseEntity = restTemplate.postForEntity(baseURL + "/read", payment.getCustomer().getIdNumber(), Payment.class);
-        assertNotNull(paymentResponseEntity.getBody());
-        assertEquals(payment.getCustomer().getIdNumber(), paymentResponseEntity.getBody().getCustomer().getIdNumber());
+        Payment paymentResponse = restTemplate.getForObject(baseURL + "/read/" + payment.getPaymentID(), Payment.class);
+        assertNotNull(paymentResponse);
+        assertSame(payment.getPaymentID(), paymentResponse.getPaymentID());
 
-        restTemplate.postForEntity(baseURL + "/delete", paymentResponseEntity.getBody().getCustomer(), void.class);
+        restTemplate.delete(baseURL + "/delete/" + paymentResponse.getPaymentID(), void.class);
 
-        paymentResponseEntity = restTemplate.postForEntity(baseURL + "/read", payment.getCustomer(), Payment.class);
+        paymentResponse = restTemplate.getForObject(baseURL + "/read/" + payment.getPaymentID(), Payment.class);
 
-        assertNull(paymentResponseEntity.getBody());
+        assertNull(paymentResponse);
     }
 
     @Test
     public void b_read() {
-        ResponseEntity<Payment> paymentResponseEntity = restTemplate.postForEntity(baseURL + "/read", payment.getCustomer().getIdNumber(), Payment.class);
+        Payment paymentResponse = restTemplate.getForObject(baseURL + "/read/" + payment.getPaymentID(), Payment.class);
 
-        assertNotNull(paymentResponseEntity.getBody());
-        assertEquals("12345678910", paymentResponseEntity.getBody().getCustomer().getIdNumber());
+        assertNotNull(paymentResponse);
+        assertSame(12, paymentResponse.getPaymentID());
     }
 
     @Test

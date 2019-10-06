@@ -17,9 +17,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -32,7 +31,7 @@ public class OfflineBookingServiceImplTest {
 
     private OfflineBooking getRepo(){
         for(OfflineBooking offlineBookingA : service.getAllOfflineBookings()){
-            if(offlineBookingA.getOfflineBookingDate().equals(offlineBooking.getOfflineBookingDate())){
+            if(offlineBookingA.getOfflineBookingID() == offlineBooking.getOfflineBookingID()){
                 return offlineBookingA;
             }
         }
@@ -46,7 +45,7 @@ public class OfflineBookingServiceImplTest {
         Date date = calendar.getTime();
         Date bookedDate = DateUtil.truncateTime(date);
 
-        offlineBooking = OfflineBookingFactory.buildOfflineBooking(bookedDate, 62);
+        offlineBooking = OfflineBookingFactory.buildOfflineBooking(29, bookedDate, 62);
     }
 
     @Test
@@ -58,7 +57,7 @@ public class OfflineBookingServiceImplTest {
     @Test
     public void a_create() {
         OfflineBooking offlineBookingTest = this.service.create(offlineBooking);
-        Assert.assertEquals(offlineBooking, offlineBookingTest);
+        Assert.assertEquals(offlineBooking.getOfflineBookingID(), offlineBookingTest.getOfflineBookingID());
     }
 
     @Test
@@ -74,14 +73,15 @@ public class OfflineBookingServiceImplTest {
 
     @Test
     public void e_delete() {
-        service.delete(offlineBooking.getOfflineBookingDate());
+        service.delete(offlineBooking.getOfflineBookingID());
         Set<OfflineBooking> offlineBookings = service.getAllOfflineBookings();
         Assert.assertEquals(0, offlineBookings.size());
     }
 
     @Test
     public void b_read() {
-        OfflineBooking offlineBookingRead = service.read(offlineBooking.getOfflineBookingDate());
-        Assert.assertEquals(offlineBooking.getOfflineBookingDate(), offlineBookingRead.getOfflineBookingDate());
+        Optional<OfflineBooking> offlineBookingRead = service.read(offlineBooking.getOfflineBookingID());
+        Assert.assertTrue(offlineBookingRead.isPresent());
+        Assert.assertEquals(offlineBooking.getOfflineBookingDate(), offlineBookingRead.get().getOfflineBookingDate());
     }
 }

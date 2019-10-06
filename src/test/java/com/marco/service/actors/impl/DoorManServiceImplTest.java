@@ -14,9 +14,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Optional;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -38,7 +37,7 @@ public class DoorManServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        doorMan = DoorManFactory.buildDoorMan("marco", "ross", 3654);
+        doorMan = DoorManFactory.buildDoorMan(3654, "marco", "ross");
     }
 
     @Test
@@ -50,7 +49,7 @@ public class DoorManServiceImplTest {
     @Test
     public void a_create() {
         DoorMan doorManTest = this.service.create(doorMan);
-        Assert.assertEquals(doorMan, doorManTest);
+        Assert.assertEquals(doorMan.getEmployeeNumber(), doorManTest.getEmployeeNumber());
     }
 
     @Test
@@ -74,7 +73,8 @@ public class DoorManServiceImplTest {
 
     @Test
     public void b_read() {
-        DoorMan doorManRead = service.read(3654);
-        Assert.assertEquals(doorMan.getEmployeeNumber(), doorManRead.getEmployeeNumber());
+        Optional<DoorMan> doorManRead = service.read(3654);
+        Assert.assertTrue(doorManRead.isPresent());
+        Assert.assertEquals(doorMan.getEmployeeNumber(), doorManRead.get().getEmployeeNumber());
     }
 }

@@ -1,9 +1,14 @@
 package com.marco.domain.bookings;
 
+import javax.persistence.Id;
+import javax.persistence.Entity;
+
+@Entity
 public class Report {
+    @Id
+    private int reportID;
     private double revenue;
     private double profit;
-    private int reportID;
 
     private Report() {
     }

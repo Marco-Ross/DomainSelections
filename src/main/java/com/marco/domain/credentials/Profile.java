@@ -1,7 +1,12 @@
 package com.marco.domain.credentials;
 
+import javax.persistence.Id;
+import javax.persistence.Entity;
+
+@Entity
 public class Profile {
-    private  int profileId;
+    @Id
+    private int profileId;
     private String displayName;
 
     private Profile() {

@@ -24,7 +24,7 @@ public class DriverControllerTest {
 
     @Test
     public void a_create() {
-        Driver driver = DriverFactory.buildDriver("john", "poop", 32);
+        Driver driver = DriverFactory.buildDriver(32, "john", "poop");
 
         ResponseEntity<Driver> postResponse = restTemplate.withBasicAuth("Kaylin", "pass02").postForEntity(baseURL + "/create", driver, Driver.class); //USE EXCHANGE FOR NEXT CREATE
 

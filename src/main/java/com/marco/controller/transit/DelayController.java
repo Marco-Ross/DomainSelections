@@ -1,14 +1,13 @@
 package com.marco.controller.transit;
 
-import com.marco.domain.transit.Carriage;
 import com.marco.domain.transit.Delay;
-import com.marco.service.transit.transitservice.CarriageService;
 import com.marco.service.transit.transitservice.DelayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -38,7 +37,7 @@ public class DelayController {
 
     @GetMapping("/read/{id}")
     @ResponseBody
-    public Delay read(@PathVariable Integer id){
+    public Optional read(@PathVariable Integer id){
         return service.read(id);
     }
 

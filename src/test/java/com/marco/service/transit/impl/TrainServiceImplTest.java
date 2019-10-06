@@ -14,10 +14,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.HashMap;
+import java.util.Optional;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -30,7 +28,7 @@ public class TrainServiceImplTest {
 
     private Train getRepo(){
         for(Train trainA : service.getAllTrains()){
-            if(trainA.getTrainNumber().equals(train.getTrainNumber())){
+            if(trainA.getTrainNumber() == train.getTrainNumber()){
                 return trainA;
             }
         }
@@ -39,7 +37,7 @@ public class TrainServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        if(service.getAllTrains().size() == 0){ train = TrainFactory.buildTrain( "SpeedyTrain", 200);}
+        if(service.getAllTrains().size() == 0){ train = TrainFactory.buildTrain( 2530, 200);}
         else{train = service.getAllTrains().iterator().next();}
 
     }
@@ -78,7 +76,8 @@ public class TrainServiceImplTest {
 
     @Test
     public void b_read() {
-        Train trainRead = service.read(getRepo().getTrainNumber());
-        Assert.assertEquals(train.getTrainNumber(), trainRead.getTrainNumber());
+        Optional<Train> trainRead = service.read(train.getTrainNumber());
+        Assert.assertTrue(trainRead.isPresent());
+        Assert.assertEquals(train.getTrainID(), trainRead.get().getTrainID());
     }
 }

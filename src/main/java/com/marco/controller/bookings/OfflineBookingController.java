@@ -1,16 +1,14 @@
 package com.marco.controller.bookings;
 
-import com.marco.domain.bookings.BookingStatus;
 import com.marco.domain.bookings.OfflineBooking;
-import com.marco.service.bookings.bookingservice.BookingStatusService;
 import com.marco.service.bookings.bookingservice.OfflineBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -32,15 +30,15 @@ public class OfflineBookingController {
         return service.update(offlineBooking);
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete/{id}")
     @ResponseBody
-    public void delete(@RequestBody Date id){
+    public void delete(@PathVariable Integer id){
         service.delete(id);
     }
 
-    @PostMapping("/read")
+    @GetMapping("/read/{id}")
     @ResponseBody
-    public OfflineBooking read(@RequestBody Date id){
+    public Optional read(@PathVariable Integer id){
         return service.read(id);
     }
 

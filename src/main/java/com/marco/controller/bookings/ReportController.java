@@ -1,8 +1,6 @@
 package com.marco.controller.bookings;
 
-import com.marco.domain.bookings.OnlineBooking;
 import com.marco.domain.bookings.Report;
-import com.marco.service.bookings.bookingservice.OnlineBookingService;
 import com.marco.service.bookings.bookingservice.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/railway/report")
@@ -38,7 +37,7 @@ public class ReportController {
 
     @GetMapping("/read/{id}")
     @ResponseBody
-    public Report read(@PathVariable Integer id){
+    public Optional read(@PathVariable Integer id){
         return service.read(id);
     }
 

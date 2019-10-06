@@ -1,15 +1,12 @@
 package com.marco.controller.timings;
 
-import com.marco.domain.timings.NewSchedule;
-import com.marco.domain.timings.Schedule;
+import com.marco.domain.timings.clientobject.NewSchedule;
 import com.marco.domain.transit.Train;
 import com.marco.factory.timings.NewScheduleFactory;
-import com.marco.factory.timings.ScheduleFactory;
 import com.marco.factory.transit.TrainFactory;
 import com.marco.service.transit.transitservice.TrainService;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -56,12 +53,12 @@ public class ScheduleControllerTest {
         String departureString = formatter.format(departureTime);
         String arrivalString = formatter.format(arrivalTime);
 
-        newSchedule = NewScheduleFactory.buildNewSchedule("2530", 200, departureString, arrivalString);
+        newSchedule = NewScheduleFactory.buildNewSchedule(2530, 200, departureString, arrivalString);
     }
 
     @Test
     public void a_create() {
-        Train train = TrainFactory.buildTrain("2530",200);
+        Train train = TrainFactory.buildTrain(2530,200);
         ResponseEntity<Train> trainPostResponse = restTemplate.postForEntity("http://localhost:8080/railway/train/create", train, Train.class);
         assertNotNull(trainPostResponse);
         assertNotNull(trainPostResponse.getBody());
@@ -73,40 +70,36 @@ public class ScheduleControllerTest {
 
     @Test
     public void c_updateTrainAtTime() {
-        NewSchedule getTrain = restTemplate.getForObject(baseURL + "/readTrain/" + newSchedule.getTrainNumber(), NewSchedule.class);
+        NewSchedule getTrain = restTemplate.getForObject(baseURL + "/readTrain/2530", NewSchedule.class);
 
-        restTemplate.postForEntity(baseURL + "/old", newSchedule, NewSchedule.class);
-        NewSchedule updated = new NewSchedule.Builder().copy(getTrain).trainNumber("3520").build();
-
+        NewSchedule updated = new NewSchedule.Builder().copy(getTrain).capacity(10).build();
 
         restTemplate.put(baseURL + "/update", updated);
 
-        NewSchedule updatedSchedule = restTemplate.getForObject(baseURL + "/read/" + newSchedule.getDeparture(), NewSchedule.class);
+        NewSchedule updatedSchedule = restTemplate.getForObject(baseURL + "/readTrain/2530", NewSchedule.class);
         System.out.println(updatedSchedule.getTrainNumber());
 
         assertNotNull(updatedSchedule);
-        assertEquals(updated.getDeparture(), updatedSchedule.getDeparture());
+        assertEquals(updated.getCapacity(), updatedSchedule.getCapacity());
     }
 
     @Test
     public void e_delete() {
-        NewSchedule getTrain = restTemplate.getForObject(baseURL + "/readTrain/3520", NewSchedule.class);
+        NewSchedule getTrain = restTemplate.getForObject(baseURL + "/readTrain/2530", NewSchedule.class);
         assertNotNull(getTrain);
-        assertEquals("3520", getTrain.getTrainNumber());
-
-        restTemplate.postForEntity(baseURL + "/old", newSchedule, NewSchedule.class);
+        assertEquals(2530, getTrain.getTrainNumber());
 
         restTemplate.delete(baseURL + "/delete/" + getTrain.getTrainNumber());
-        getTrain = restTemplate.getForObject(baseURL + "/read/" + newSchedule.getTrainNumber(), NewSchedule.class);
+        getTrain = restTemplate.getForObject(baseURL + "/readTrain/2530", NewSchedule.class);
 
         assertNull(getTrain);
     }
 
     @Test
     public void b_read() { //Return all trains at this time
-        ResponseEntity<NewSchedule> scheduleResponseEntity = restTemplate.getForEntity(baseURL + "/read/" + newSchedule.getDeparture(), NewSchedule.class);
+        ResponseEntity<NewSchedule> scheduleResponseEntity = restTemplate.getForEntity(baseURL + "/readTrain/" + newSchedule.getTrainNumber(), NewSchedule.class);
         assertNotNull(scheduleResponseEntity.getBody());
-        assertEquals("2530", scheduleResponseEntity.getBody().getTrainNumber());
+        assertEquals(2530, scheduleResponseEntity.getBody().getTrainNumber());
     }
 
     @Test

@@ -1,44 +1,42 @@
 package com.marco.service.transit.impl;
 
+import com.google.common.collect.Sets;
 import com.marco.domain.transit.Station;
-import com.marco.repository.transit.impl.StationRepositoryImpl;
 import com.marco.repository.transit.transitrepo.StationRepository;
 import com.marco.service.transit.transitservice.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Set;
 
 @Service("StationServiceImpl")
 public class StationServiceImpl implements StationService {
     @Autowired
-    @Qualifier("StationRepoImpl")
     private StationRepository repository;
 
     @Override
     public Set<Station> getAllStations() {
-        return this.repository.getAllStations();
+        return Sets.newHashSet(this.repository.findAll());
     }
 
     @Override
     public Station create(Station station) {
-        return this.repository.create(station);
+        return this.repository.save(station);
     }
 
     @Override
     public Station update(Station station) {
-        return this.repository.update(station);
+        return this.repository.save(station);
     }
 
     @Override
     public void delete(Integer station) {
-        this.repository.delete(station);
+        this.repository.deleteById(station);
     }
 
     @Override
-    public Station read(Integer station) {
-        return this.repository.read(station);
+    public Optional<Station> read(Integer station) {
+        return this.repository.findById(station);
     }
 }

@@ -1,8 +1,6 @@
 package com.marco.controller.bookings;
 
-import com.marco.domain.bookings.OfflineBooking;
 import com.marco.domain.bookings.OnlineBooking;
-import com.marco.service.bookings.bookingservice.OfflineBookingService;
 import com.marco.service.bookings.bookingservice.OnlineBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -39,7 +38,7 @@ public class OnlineBookingController {
 
     @GetMapping("/read/{id}")
     @ResponseBody
-    public OnlineBooking read(@PathVariable Integer id){
+    public Optional read(@PathVariable Integer id){
         return service.read(id);
     }
 

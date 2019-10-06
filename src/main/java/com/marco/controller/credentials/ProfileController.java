@@ -1,8 +1,6 @@
 package com.marco.controller.credentials;
 
-import com.marco.domain.credentials.Payment;
 import com.marco.domain.credentials.Profile;
-import com.marco.service.credentials.credentialservice.PaymentService;
 import com.marco.service.credentials.credentialservice.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/railway/profile")
@@ -38,7 +37,7 @@ public class ProfileController {
 
     @GetMapping("/read/{id}")
     @ResponseBody
-    public Profile read(@PathVariable Integer id){
+    public Optional read(@PathVariable Integer id){
         return service.read(id);
     }
 

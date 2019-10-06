@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -36,7 +37,7 @@ public class AnnouncerServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        announcer = AnnouncerFactory.buildAnnouncer("marco", "ross", 3654);
+        announcer = AnnouncerFactory.buildAnnouncer(3654, "marco", "ross");
     }
 
     @Test
@@ -48,7 +49,7 @@ public class AnnouncerServiceImplTest {
     @Test
     public void a_create() {
         Announcer announcerTest = this.service.create(announcer);
-        Assert.assertEquals(announcer, announcerTest);
+        Assert.assertEquals(announcer.getEmployeeNumber(), announcerTest.getEmployeeNumber());
     }
 
     @Test
@@ -65,8 +66,7 @@ public class AnnouncerServiceImplTest {
 
     @Test
     public void e_delete() {
-        Announcer saved = getRepo();
-        this.service.delete(saved.getEmployeeNumber());
+        this.service.delete(announcer.getEmployeeNumber());
 
         ArrayList<Announcer> arrayList = service.getAllAnnouncers();
         Assert.assertEquals(0, arrayList.size());
@@ -74,9 +74,8 @@ public class AnnouncerServiceImplTest {
 
     @Test
     public void b_read() {
-        Announcer announcerList = getRepo();
-        Announcer announcerRead = this.service.read(announcerList.getEmployeeNumber());
-
-        Assert.assertEquals(announcerList, announcerRead);
+        Optional<Announcer> announcerRead = this.service.read(announcer.getEmployeeNumber());
+        Assert.assertTrue(announcerRead.isPresent());
+        Assert.assertEquals(announcer.getEmployeeNumber(), announcerRead.get().getEmployeeNumber());
     }
 }

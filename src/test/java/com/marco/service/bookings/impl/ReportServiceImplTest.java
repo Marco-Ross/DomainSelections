@@ -15,8 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
+import java.util.Optional;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -50,7 +49,7 @@ public class ReportServiceImplTest {
     @Test
     public void a_create() {
         Report reportTest = this.service.create(report);
-        Assert.assertEquals(report, reportTest);
+        Assert.assertEquals(report.getReportID(), reportTest.getReportID());
     }
 
     @Test
@@ -74,7 +73,8 @@ public class ReportServiceImplTest {
 
     @Test
     public void b_read() {
-        Report reportRead = service.read(20);
-        Assert.assertEquals(report.getReportID(), reportRead.getReportID());
+        Optional<Report> reportRead = service.read(400);
+        Assert.assertTrue(reportRead.isPresent());
+        Assert.assertEquals(report.getReportID(), reportRead.get().getReportID());
     }
 }

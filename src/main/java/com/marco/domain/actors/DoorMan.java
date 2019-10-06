@@ -1,13 +1,14 @@
 package com.marco.domain.actors;
 
-import com.marco.domain.credentials.LoginDetail;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-import java.util.Date;
-
+@Entity
 public class DoorMan {
+    @Id
+    private int employeeNumber;
     private String name;
     private String surname;
-    private int employeeNumber;
 
     private DoorMan(){}
 

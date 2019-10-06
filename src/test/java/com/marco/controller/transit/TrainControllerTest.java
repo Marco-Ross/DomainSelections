@@ -30,7 +30,7 @@ public class TrainControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        train = TrainFactory.buildTrain("2530",200);
+        train = TrainFactory.buildTrain(2530,200);
     }
 
     @Test
@@ -43,6 +43,7 @@ public class TrainControllerTest {
     @Test
     public void c_update() {
         Train getTrain = restTemplate.getForObject(baseURL + "/read/2530", Train.class);
+
         Train updated = new Train.Builder().copy(getTrain).capacity(30).build();
         restTemplate.put(baseURL + "/update", updated);
 
@@ -54,21 +55,22 @@ public class TrainControllerTest {
 
     @Test
     public void e_delete() {
-        Train getTrain = restTemplate.getForObject(baseURL + "/read/2530", Train.class);
-        assertNotNull(getTrain);
-        assertEquals("2530", getTrain.getTrainNumber());
+        Train trainie = restTemplate.getForObject(baseURL + "/read/2530", Train.class);
+        assertNotNull(trainie);
+        assertEquals(trainie.getTrainID(), trainie.getTrainID());
 
-        restTemplate.delete(baseURL + "/delete/" + getTrain.getTrainNumber());
-        getTrain = restTemplate.getForObject(baseURL + "/read/2530", Train.class);
+        restTemplate.delete(baseURL + "/delete/" + trainie.getTrainNumber());
 
-        assertNull(getTrain);
+        trainie = restTemplate.getForObject(baseURL + "/read/2530", Train.class);
+
+        assertNull(trainie);
     }
 
     @Test
     public void b_read() {
-        ResponseEntity<Train> trainResponseEntity = restTemplate.getForEntity(baseURL + "/read/" + train.getTrainNumber(), Train.class);
-        assertNotNull(trainResponseEntity.getBody());
-        assertEquals("2530", trainResponseEntity.getBody().getTrainNumber());
+        ResponseEntity<Train> trainResponse = restTemplate.getForEntity(baseURL + "/read/2530", Train.class);
+        assertNotNull(trainResponse.getBody());
+        assertEquals(2530, trainResponse.getBody().getTrainNumber());
     }
 
     @Test

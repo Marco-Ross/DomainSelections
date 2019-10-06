@@ -1,12 +1,15 @@
 package com.marco.domain.actors;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-@EntityScan
+@Entity
 public class Announcer implements Employee{
+    @Id
+    private int employeeNumber;
+
     private String name;
     private String surname;
-    private int employeeNumber;
 
     private Announcer(){}
 

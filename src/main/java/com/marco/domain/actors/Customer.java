@@ -1,10 +1,15 @@
 package com.marco.domain.actors;
 
+import javax.persistence.*;
+
+@Entity
 public class Customer implements Employee {
+    @Id
+    @Column(name="id_number")
+    private int idNumber;
     private String name;
     private String surname;
     private int age;
-    private String idNumber;
     private double balance;
 
     private Customer(){}
@@ -29,7 +34,7 @@ public class Customer implements Employee {
         return age;
     }
 
-    public String getIdNumber() {
+    public int getIdNumber() {
         return idNumber;
     }
 
@@ -41,7 +46,7 @@ public class Customer implements Employee {
         private String name;
         private String surname;
         private int age;
-        private String idNumber;
+        private int idNumber;
         private double balance;
 
         public Builder name(String name){
@@ -59,7 +64,7 @@ public class Customer implements Employee {
             return this;
         }
 
-        public Builder idNumber(String idNumber){
+        public Builder idNumber(int idNumber){
             this.idNumber = idNumber;
             return this;
         }

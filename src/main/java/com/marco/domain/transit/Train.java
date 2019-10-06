@@ -1,9 +1,16 @@
 package com.marco.domain.transit;
 
+import javax.persistence.*;
+
+@Entity
 public class Train {
-    private String trainID;
+    @Id
+    @Column(name = "train_id")
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private int trainID;
+    @Column(name = "train_capacity")
     private int capacity;
-    private String trainNumber;
+    private int trainNumber;
 
     private Train(){}
 
@@ -13,20 +20,20 @@ public class Train {
         this.trainNumber = builder.trainNumber;
     }
 
-    public String getTrainID(){return trainID;}
+    public int getTrainID(){return trainID;}
 
     public int getCapacity(){return capacity;}
 
-    public String getTrainNumber(){
+    public int getTrainNumber(){
         return trainNumber;
     }
 
     public static class Builder{
-        private String trainID;
+        private int trainID;
         private int capacity;
-        private String trainNumber;
+        private int trainNumber;
 
-        public Builder trainID(String trainID){
+        public Builder trainID(int trainID){
             this.trainID = trainID;
             return this;
         }
@@ -36,7 +43,7 @@ public class Train {
             return this;
         }
 
-        public Builder trainNumber(String trainNumber){
+        public Builder trainNumber(int trainNumber){
             this.trainNumber = trainNumber;
             return this;
         }

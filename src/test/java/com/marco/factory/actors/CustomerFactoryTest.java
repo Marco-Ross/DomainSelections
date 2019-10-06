@@ -12,9 +12,9 @@ public class CustomerFactoryTest {
         String name = "piet";
         String surname = "konnie";
         int age = 30;
-        String idNumber = "1912185698256";
+        int idNumber = 191218563;
 
-        Customer customer = CustomerFactory.buildCustomer(name,surname,age,idNumber, 200);
-        assertSame(idNumber, customer.getIdNumber());
+        Customer customer = CustomerFactory.buildCustomer(idNumber, name, surname, age, 200);
+        assertEquals(idNumber, customer.getIdNumber());
     }
 }

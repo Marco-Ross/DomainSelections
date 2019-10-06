@@ -1,8 +1,6 @@
 package com.marco.controller.actors;
 
-import com.marco.domain.actors.Driver;
 import com.marco.domain.actors.Manager;
-import com.marco.service.actors.actorservice.DriverService;
 import com.marco.service.actors.actorservice.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,7 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/railway/actor/manager")
@@ -39,7 +37,7 @@ public class ManagerController {
 
     @GetMapping("/read/{id}")
     @ResponseBody
-    public Manager read(@PathVariable Integer id){
+    public Optional read(@PathVariable Integer id){
         return service.read(id);
     }
 

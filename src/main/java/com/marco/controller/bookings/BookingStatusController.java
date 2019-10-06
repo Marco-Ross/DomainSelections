@@ -1,15 +1,13 @@
 package com.marco.controller.bookings;
 
-import com.marco.domain.actors.TicketChecker;
 import com.marco.domain.bookings.BookingStatus;
-import com.marco.service.actors.actorservice.TicketCheckerService;
 import com.marco.service.bookings.bookingservice.BookingStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -39,7 +37,7 @@ public class BookingStatusController {
 
     @GetMapping("/read/{id}")
     @ResponseBody
-    public BookingStatus read(@PathVariable Integer id){
+    public Optional read(@PathVariable Integer id){
         return service.read(id);
     }
 

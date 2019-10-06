@@ -1,8 +1,11 @@
 package com.marco.domain.transit;
 
-import java.util.Date;
+import javax.persistence.Id;
+import javax.persistence.Entity;
 
+@Entity
 public class Platform {
+    @Id
     private int platformNumber;
     private int platformLength;
 

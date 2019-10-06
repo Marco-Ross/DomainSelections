@@ -1,8 +1,13 @@
 package com.marco.domain.transit;
 
+import javax.persistence.Id;
+import javax.persistence.Entity;
+
+@Entity
 public class Station {
-    private String stationName;
+    @Id
     private int stationNumber;
+    private String stationName;
 
     private Station() {
     }

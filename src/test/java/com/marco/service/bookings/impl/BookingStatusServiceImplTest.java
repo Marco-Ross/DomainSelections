@@ -16,9 +16,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -58,7 +57,7 @@ public class BookingStatusServiceImplTest {
     @Test
     public void a_create() {
         BookingStatus bookingStatusTest = this.service.create(bookingStatus);
-        Assert.assertEquals(bookingStatus, bookingStatusTest);
+        Assert.assertEquals(bookingStatus.getBookingId(), bookingStatusTest.getBookingId());
     }
 
     @Test
@@ -85,7 +84,8 @@ public class BookingStatusServiceImplTest {
 
     @Test
     public void b_read() {
-        BookingStatus bookingStatusRead = service.read(553);
-        Assert.assertEquals(bookingStatus.getBookingId(), bookingStatusRead.getBookingId(), 0.1);
+        Optional<BookingStatus> bookingStatusRead = service.read(553);
+        Assert.assertTrue(bookingStatusRead.isPresent());
+        Assert.assertEquals(bookingStatus.getBookingId(), bookingStatusRead.get().getBookingId(), 0.1);
     }
 }

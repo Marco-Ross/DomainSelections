@@ -13,7 +13,7 @@ public class TicketCheckerFactoryTest {
         String surname = "tiana";
         int employeeNumber = 3251;
 
-        TicketChecker ticketChecker = TicketCheckerFactory.buildTicketChecker(name, surname, employeeNumber);
+        TicketChecker ticketChecker = TicketCheckerFactory.buildTicketChecker(employeeNumber, name, surname);
         assertNotNull(ticketChecker.getName());
     }
 }

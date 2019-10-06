@@ -24,7 +24,7 @@ public class SecurityControllerTest {
 
     @Test
     public void a_create() {
-        Security security = SecurityFactory.buildSecurity("cinder", "block", 48);
+        Security security = SecurityFactory.buildSecurity(48, "cinder", "block");
 
         ResponseEntity<Security> postResponse = restTemplate.withBasicAuth("Kaylin", "pass02").postForEntity(baseURL + "/create", security, Security.class); //USE EXCHANGE FOR NEXT CREATE
 

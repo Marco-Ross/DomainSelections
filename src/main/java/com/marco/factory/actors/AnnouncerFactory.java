@@ -3,7 +3,7 @@ package com.marco.factory.actors;
 import com.marco.domain.actors.Announcer;
 
 public class AnnouncerFactory {
-    public static Announcer buildAnnouncer(String name, String surname, int employeeNumber){
+    public static Announcer buildAnnouncer(int employeeNumber, String name, String surname){
         return new Announcer.Builder().name(name)
                 .surname(surname)
                 .employeeNumber(employeeNumber)

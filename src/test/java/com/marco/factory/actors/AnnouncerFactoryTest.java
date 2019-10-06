@@ -13,7 +13,7 @@ public class AnnouncerFactoryTest {
         String surname = "rossy";
         int employeeNumber = 125;
 
-        Announcer announcer = AnnouncerFactory.buildAnnouncer(name, surname, employeeNumber);
+        Announcer announcer = AnnouncerFactory.buildAnnouncer(employeeNumber, name, surname);
 
         assertSame(employeeNumber, announcer.getEmployeeNumber());
     }

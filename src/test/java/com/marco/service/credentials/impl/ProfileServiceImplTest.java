@@ -15,8 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
+import java.util.Optional;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -50,7 +49,7 @@ public class ProfileServiceImplTest {
     @Test
     public void a_create() {
         Profile profileTest = this.service.create(profile);
-        Assert.assertEquals(profile, profileTest);
+        Assert.assertEquals(profile.getProfileId(), profileTest.getProfileId());
     }
 
     @Test
@@ -74,7 +73,8 @@ public class ProfileServiceImplTest {
 
     @Test
     public void b_read() {
-        Profile profileRead = service.read(2);
-        Assert.assertEquals(profile.getProfileId(), profileRead.getProfileId());
+        Optional<Profile> profileRead = service.read(2);
+        Assert.assertTrue(profileRead.isPresent());
+        Assert.assertEquals(profile.getProfileId(), profileRead.get().getProfileId());
     }
 }

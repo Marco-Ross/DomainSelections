@@ -1,15 +1,13 @@
 package com.marco.controller.transit;
 
-import com.marco.domain.transit.Station;
 import com.marco.domain.transit.Train;
-import com.marco.service.transit.transitservice.StationService;
 import com.marco.service.transit.transitservice.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -33,13 +31,13 @@ public class TrainController {
 
     @DeleteMapping("/delete/{id}")
     @ResponseBody
-    public void delete(@PathVariable String id){
+    public void delete(@PathVariable Integer id){
         service.delete(id);
     }
 
     @GetMapping("/read/{id}")
     @ResponseBody
-    public Train read(@PathVariable String id){
+    public Optional read(@PathVariable Integer id){
         return service.read(id);
     }
 

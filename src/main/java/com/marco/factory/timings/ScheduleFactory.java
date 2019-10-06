@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class ScheduleFactory {
     public static Schedule buildSchedule(String departure, String arrival){
-        return new Schedule.Builder().scheduleID(RandomID.generateRandomID())
+        return new Schedule.Builder()
                 .departure(departure)
                 .arrival(arrival)
                 .build();

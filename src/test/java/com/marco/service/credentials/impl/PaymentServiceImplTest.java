@@ -17,8 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
+import java.util.Optional;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -31,7 +30,7 @@ public class PaymentServiceImplTest {
 
     private Payment getRepo(){
         for(Payment paymentA : service.getAllPayments()){
-            if(paymentA.getCustomer().getIdNumber().equals(payment.getCustomer().getIdNumber())){
+            if(paymentA.getPaymentID() == payment.getPaymentID()){
                 return paymentA;
             }
         }
@@ -40,8 +39,7 @@ public class PaymentServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        Customer customer = CustomerFactory.buildCustomer("marco", "ross", 23, "12345678910", 200);
-        payment = PaymentFactory.buildPayment(50, customer);
+        payment = PaymentFactory.buildPayment(120, 50, "12345678910");
     }
 
     @Test
@@ -53,7 +51,7 @@ public class PaymentServiceImplTest {
     @Test
     public void a_create() {
         Payment paymentTest = this.service.create(payment);
-        Assert.assertEquals(payment, paymentTest);
+        Assert.assertEquals(payment.getPaymentID(), paymentTest.getPaymentID());
     }
 
     @Test
@@ -70,14 +68,15 @@ public class PaymentServiceImplTest {
 
     @Test
     public void e_delete() {
-        service.delete(payment.getCustomer().getIdNumber());
+        service.delete(payment.getPaymentID());
         ArrayList<Payment> payments = service.getAllPayments();
         Assert.assertEquals(0, payments.size());
     }
 
     @Test
     public void b_read() {
-        Payment paymentRead = this.service.read("12345678910");
-        Assert.assertSame(payment.getCustomer().getIdNumber(), paymentRead.getCustomer().getIdNumber());
+        Optional<Payment> paymentRead = this.service.read(120);
+        Assert.assertTrue(paymentRead.isPresent());
+        Assert.assertSame(payment.getPaymentID(), paymentRead.get().getPaymentID());
     }
 }

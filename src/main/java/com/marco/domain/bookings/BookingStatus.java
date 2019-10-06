@@ -1,8 +1,12 @@
 package com.marco.domain.bookings;
 
+import javax.persistence.Id;
+import javax.persistence.Entity;
 import java.util.Date;
 
+@Entity
 public class BookingStatus {
+    @Id
     private int bookingId;
     private Date timesBooked;
 

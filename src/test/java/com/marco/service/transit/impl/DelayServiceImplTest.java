@@ -16,9 +16,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Optional;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -40,8 +39,7 @@ public class DelayServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        Station station = StationFactory.buildStation("Stikland", 12);
-        delay = DelayFactory.buildDelay(10, station, "Man hit by train");
+        delay = DelayFactory.buildDelay(10, "Man hit by train");
     }
 
     @Test
@@ -54,7 +52,7 @@ public class DelayServiceImplTest {
     public void a_create() {
         Delay delayTest = this.service.create(delay);
 
-        Assert.assertEquals(delay, delayTest);
+        Assert.assertEquals(delay.getDelayId(), delayTest.getDelayId());
     }
 
     @Test
@@ -78,7 +76,8 @@ public class DelayServiceImplTest {
 
     @Test
     public void b_read() {
-        Delay delayList = service.read(10);
-        Assert.assertEquals(delay.getDelayId(), delayList.getDelayId());
+        Optional<Delay> delayRead = service.read(10);
+        Assert.assertTrue(delayRead.isPresent());
+        Assert.assertEquals(delay.getDelayId(), delayRead.get().getDelayId());
     }
 }

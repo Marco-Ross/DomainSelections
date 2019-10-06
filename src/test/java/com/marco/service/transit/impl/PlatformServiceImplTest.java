@@ -14,9 +14,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Optional;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -50,7 +49,7 @@ public class PlatformServiceImplTest {
     @Test
     public void a_create() {
         Platform platformTest = this.service.create(platform);
-        Assert.assertEquals(platform, platformTest);
+        Assert.assertEquals(platform.getPlatformNumber(), platformTest.getPlatformNumber());
     }
 
     @Test
@@ -74,7 +73,8 @@ public class PlatformServiceImplTest {
 
     @Test
     public void b_read() {
-        Platform platformRead = service.read(10);
-        Assert.assertEquals(platform.getPlatformNumber(), platformRead.getPlatformNumber());
+        Optional<Platform> platformRead = service.read(10);
+        Assert.assertTrue(platformRead.isPresent());
+        Assert.assertEquals(platform.getPlatformNumber(), platformRead.get().getPlatformNumber());
     }
 }

@@ -1,6 +1,11 @@
 package com.marco.domain.transit;
 
+import javax.persistence.Id;
+import javax.persistence.Entity;
+
+@Entity
 public class Carriage {
+    @Id
     private int carriageNumber;
     private int capacity;
 

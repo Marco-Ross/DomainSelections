@@ -1,20 +1,16 @@
 package com.marco.service.timings.impl;
 
-import com.marco.domain.timings.NewSchedule;
+import com.google.common.collect.Sets;
+import com.marco.domain.timings.clientobject.NewSchedule;
 import com.marco.domain.timings.Schedule;
-import com.marco.domain.timings.TrainSchedule;
+import com.marco.domain.timings.compositeclass.TrainSchedule;
 import com.marco.domain.transit.Train;
 import com.marco.factory.timings.NewScheduleFactory;
-import com.marco.factory.timings.TrainScheduleFactory;
-import com.marco.factory.transit.TrainFactory;
-import com.marco.repository.timings.timingrepo.ScheduleRepository;
 import com.marco.repository.timings.timingrepo.TrainScheduleRepository;
-import com.marco.repository.transit.transitrepo.TrainRepository;
+import com.marco.service.timings.timingservice.ScheduleService;
 import com.marco.service.timings.timingservice.TrainScheduleService;
+import com.marco.service.transit.transitservice.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,50 +19,47 @@ import java.util.*;
 public class TrainScheduleServiceImpl implements TrainScheduleService {
 
     @Autowired
-    @Qualifier("TrainScheduleOne")
     private TrainScheduleRepository trainScheduleRepository;
 
     @Autowired
-    @Qualifier("ScheduleRepoImpl")
-    private ScheduleRepository scheduleRepository;
+    private ScheduleService scheduleService;
 
     @Autowired
-    @Qualifier("TrainRepoImpl")
-    private TrainRepository trainRepository;
+    private TrainService trainService;
 
     @Override
     public Set<TrainSchedule> getAllTrainSchedules() {
-        return trainScheduleRepository.getAllTrainSchedules();
+        return Sets.newHashSet(trainScheduleRepository.findAll());
     }
 
     @Override
     public TrainSchedule create(TrainSchedule trainSchedule) {
-        return trainScheduleRepository.create(trainSchedule);
+        return trainScheduleRepository.save(trainSchedule);
     }
 
     @Override
     public TrainSchedule update(TrainSchedule trainSchedule) {
-        return trainScheduleRepository.update(trainSchedule);
+        return trainScheduleRepository.save(trainSchedule);
     }
 
     @Override
-    public void delete(String trainScheduleID) {
-        trainScheduleRepository.delete(trainScheduleID);
+    public void delete(Integer trainScheduleID) {
+        trainScheduleRepository.deleteById(trainScheduleID);
     }
 
     @Override
-    public TrainSchedule read(String trainScheduleID) {
-        return trainScheduleRepository.read(trainScheduleID);
+    public Optional<TrainSchedule> read(Integer trainScheduleID) {
+        return trainScheduleRepository.findById(trainScheduleID);
     }
 
     @Override
     public NewSchedule readTime(String time) {
-        for (Schedule schedule : scheduleRepository.getAllSchedules()) {
+        for (Schedule schedule : scheduleService.getAllSchedules()) {
             if (schedule.getDeparture().equals(time)) {
-                for (TrainSchedule trainSchedule : trainScheduleRepository.getAllTrainSchedules()) {
-                    if (schedule.getScheduleID().equals(trainSchedule.getScheduleID())) {
-                        for(Train train : trainRepository.getAllTrains()){
-                            if(train.getTrainNumber().equals(trainSchedule.getTrainNumber())){
+                for (TrainSchedule trainSchedule : trainScheduleRepository.findAll()) {
+                    if (schedule.getScheduleID() == trainSchedule.getScheduleID()) {
+                        for(Train train : trainService.getAllTrains()){
+                            if(train.getTrainID() == trainSchedule.getTrainID()){
                                 return NewScheduleFactory.buildNewSchedule(train.getTrainNumber(), train.getCapacity(), schedule.getDeparture(), schedule.getArrival());
                             }
                         }
@@ -78,16 +71,17 @@ public class TrainScheduleServiceImpl implements TrainScheduleService {
     }
 
     @Override
-    public NewSchedule readTrain(String trainNumber) {
-        for(Train train : trainRepository.getAllTrains()){
-            if(train.getTrainNumber().equals(trainNumber)){
-                for (TrainSchedule trainSchedule : trainScheduleRepository.getAllTrainSchedules()) {
-                    if (trainNumber.equals(trainSchedule.getTrainNumber())) {
-                        for (Schedule schedule : scheduleRepository.getAllSchedules()) {
-                            if (schedule.getScheduleID().equals(trainSchedule.getScheduleID())) {
-                                return NewScheduleFactory.buildNewSchedule(train.getTrainNumber(), train.getCapacity(), schedule.getDeparture(), schedule.getArrival());
-                            }
-                        }
+    public NewSchedule readTrain(int trainNumber) {
+        if(trainService.getTrainWithTrainNumber(trainNumber) == null){
+            return null;
+        }
+
+        Train trainReceived = trainService.getTrainWithTrainNumber(trainNumber); //Read train to get ID
+        for (TrainSchedule trainSchedule : trainScheduleRepository.findAll()) {
+            if (trainReceived.getTrainID() == trainSchedule.getTrainID()) {
+                for (Schedule schedule : scheduleService.getAllSchedules()) {
+                    if (schedule.getScheduleID() == trainSchedule.getScheduleID()) {
+                        return NewScheduleFactory.buildNewSchedule(trainReceived.getTrainNumber(), trainReceived.getCapacity(), schedule.getDeparture(), schedule.getArrival());
                     }
                 }
             }

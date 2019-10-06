@@ -14,9 +14,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Optional;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -38,7 +37,7 @@ public class TicketClerkServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        ticketClerk = TicketClerkFactory.buildTicketClerk("marco", "ross", 3654);
+        ticketClerk = TicketClerkFactory.buildTicketClerk(3654, "marco", "ross");
     }
 
     @Test
@@ -50,7 +49,7 @@ public class TicketClerkServiceImplTest {
     @Test
     public void a_create() {
         TicketClerk ticketClerkTest = this.service.create(ticketClerk);
-        Assert.assertEquals(ticketClerk, ticketClerkTest);
+        Assert.assertEquals(ticketClerk.getEmployeeNumber(), ticketClerkTest.getEmployeeNumber());
     }
 
     @Test
@@ -74,7 +73,8 @@ public class TicketClerkServiceImplTest {
 
     @Test
     public void b_read() {
-        TicketClerk ticketClerkRead = service.read(3654);
-        Assert.assertEquals(ticketClerk.getEmployeeNumber(), ticketClerkRead.getEmployeeNumber());
+        Optional<TicketClerk> ticketClerkRead = service.read(3654);
+        Assert.assertTrue(ticketClerkRead.isPresent());
+        Assert.assertEquals(ticketClerk.getEmployeeNumber(), ticketClerkRead.get().getEmployeeNumber());
     }
 }

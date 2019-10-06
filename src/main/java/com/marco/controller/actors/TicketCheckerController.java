@@ -1,8 +1,6 @@
 package com.marco.controller.actors;
 
-import com.marco.domain.actors.Security;
 import com.marco.domain.actors.TicketChecker;
-import com.marco.service.actors.actorservice.SecurityService;
 import com.marco.service.actors.actorservice.TicketCheckerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,7 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/railway/actor/ticketchecker")
@@ -39,7 +37,7 @@ public class TicketCheckerController {
 
     @GetMapping("/read/{id}")
     @ResponseBody
-    public TicketChecker read(@PathVariable Integer id){
+    public Optional read(@PathVariable Integer id){
         return service.read(id);
     }
 

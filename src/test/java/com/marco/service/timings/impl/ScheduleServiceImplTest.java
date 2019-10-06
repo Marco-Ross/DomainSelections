@@ -1,9 +1,7 @@
 package com.marco.service.timings.impl;
 
 import com.marco.domain.timings.Schedule;
-import com.marco.domain.transit.Train;
 import com.marco.factory.timings.ScheduleFactory;
-import com.marco.factory.transit.TrainFactory;
 import com.marco.service.timings.timingservice.ScheduleService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,8 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
-import static org.junit.Assert.*;
+import java.util.Optional;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -36,7 +33,7 @@ public class ScheduleServiceImplTest {
 
     private Schedule getRepo(){
         for(Schedule scheduleA : service.getAllSchedules()){
-            if(scheduleA.getScheduleID().equals(schedule.getScheduleID())){
+            if(scheduleA.getScheduleID() == schedule.getScheduleID()){
                 return scheduleA;
             }
         }
@@ -100,7 +97,8 @@ public class ScheduleServiceImplTest {
 
     @Test
     public void b_read() {
-        Schedule scheduleRead = service.read(schedule.getScheduleID());
-        Assert.assertEquals(schedule.getScheduleID(), scheduleRead.getScheduleID());
+        Optional<Schedule> scheduleRead = service.read(schedule.getScheduleID());
+        Assert.assertTrue(scheduleRead.isPresent());
+        Assert.assertEquals(schedule.getScheduleID(), scheduleRead.get().getScheduleID());
     }
 }

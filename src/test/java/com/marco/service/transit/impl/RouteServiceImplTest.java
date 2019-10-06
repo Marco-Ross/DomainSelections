@@ -14,9 +14,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Optional;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -51,7 +50,7 @@ public class RouteServiceImplTest {
     public void a_create() {
         Route routeTest = this.service.create(route);
 
-        Assert.assertEquals(route, routeTest);
+        Assert.assertEquals(route.getRouteAreaCode(), routeTest.getRouteAreaCode());
     }
 
     @Test
@@ -75,7 +74,8 @@ public class RouteServiceImplTest {
 
     @Test
     public void b_read() {
-        Route routeList = service.read(1);
-        Assert.assertEquals(route.getRouteAreaCode(), routeList.getRouteAreaCode());
+        Optional<Route> routeRead = service.read(1);
+        Assert.assertTrue(routeRead.isPresent());
+        Assert.assertEquals(route.getRouteAreaCode(), routeRead.get().getRouteAreaCode());
     }
 }

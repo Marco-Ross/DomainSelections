@@ -24,7 +24,7 @@ public class TicketClerkControllerTest {
 
     @Test
     public void a_create() {
-        TicketClerk ticketClerk = TicketClerkFactory.buildTicketClerk("cinder", "block", 93);
+        TicketClerk ticketClerk = TicketClerkFactory.buildTicketClerk(93, "cinder", "block");
 
         ResponseEntity<TicketClerk> postResponse = restTemplate.withBasicAuth("Kaylin", "pass02").postForEntity(baseURL + "/create", ticketClerk, TicketClerk.class); //USE EXCHANGE FOR NEXT CREATE
 

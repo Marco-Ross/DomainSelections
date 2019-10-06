@@ -1,8 +1,6 @@
 package com.marco.controller.credentials;
 
-import com.marco.domain.credentials.LoginDetail;
 import com.marco.domain.credentials.Payment;
-import com.marco.service.credentials.credentialservice.LoginDetailService;
 import com.marco.service.credentials.credentialservice.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,7 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/railway/payment")
@@ -31,15 +29,15 @@ public class PaymentController {
         return service.update(payment);
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete/{id}")
     @ResponseBody
-    public void delete(@RequestBody String id){
+    public void delete(@PathVariable Integer id){
         service.delete(id);
     }
 
-    @PostMapping("/read")
+    @GetMapping("/read/{id}")
     @ResponseBody
-    public Payment read(@RequestBody String id){
+    public Optional read(@PathVariable Integer id){
         return service.read(id);
     }
 

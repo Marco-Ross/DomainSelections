@@ -14,9 +14,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Optional;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -29,7 +28,7 @@ public class CustomerServiceImplTest {
 
     private Customer getRepo(){
         for(Customer customerA : service.getAllCustomers()){
-            if(customerA.getIdNumber().equals(customer.getIdNumber())){
+            if(customerA.getIdNumber() == customer.getIdNumber()){
                 return customerA;
             }
         }
@@ -38,13 +37,13 @@ public class CustomerServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        customer = CustomerFactory.buildCustomer("marco", "ross", 23, "12345678910", 200);
+        customer = CustomerFactory.buildCustomer(1234567891, "marco", "ross", 23, 200);
     }
 
     @Test
     public void a_create() {
         Customer customerTest = this.service.create(customer);
-        Assert.assertEquals(customer, customerTest);
+        Assert.assertEquals(customer.getIdNumber(), customerTest.getIdNumber());
     }
 
     @Test
@@ -68,8 +67,9 @@ public class CustomerServiceImplTest {
 
     @Test
     public void b_read() {
-        Customer customerRead = service.read(customer.getIdNumber());
-        Assert.assertSame(customer.getIdNumber(), customerRead.getIdNumber());
+        Optional<Customer> customerRead = service.read(customer.getIdNumber());
+        Assert.assertTrue(customerRead.isPresent());
+        Assert.assertEquals(customer.getIdNumber(), customerRead.get().getIdNumber());
     }
 
     @Test

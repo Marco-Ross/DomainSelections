@@ -1,14 +1,13 @@
 package com.marco.controller.actors;
 
-import com.marco.domain.actors.Announcer;
 import com.marco.domain.actors.Customer;
 import com.marco.service.actors.actorservice.CustomerService;
-import com.marco.service.actors.impl.AnnouncerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -32,13 +31,13 @@ public class CustomerController {
 
     @DeleteMapping("/delete/{id}")
     @ResponseBody
-    public void delete(@PathVariable String id){
+    public void delete(@PathVariable int id){
         service.delete(id);
     }
 
     @GetMapping("/read/{id}")
     @ResponseBody
-    public Customer read(@PathVariable String id){
+    public Optional read(@PathVariable int id){
         return service.read(id);
     }
 

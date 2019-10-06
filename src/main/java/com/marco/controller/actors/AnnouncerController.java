@@ -1,16 +1,15 @@
 package com.marco.controller.actors;
 
 import com.marco.domain.actors.Announcer;
-import com.marco.factory.actors.AnnouncerFactory;
 import com.marco.service.actors.actorservice.AnnouncerService;
-import com.marco.service.actors.impl.AnnouncerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.RequestEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Optional;
+
 //(@RestController) = Stereotype for presentation layer (Combination of @Controller & @ResponseBody)
 //Different from web application in that the response for web app is generally(HTML,CSS,JavaScript), whereas REST API just returns data in the form of JSON or XML because most REST clients are programs
 @RestController
@@ -41,7 +40,7 @@ public class AnnouncerController {
 
     @GetMapping("/read/{id}")
     @ResponseBody
-    public Announcer read(@PathVariable Integer id){
+    public Optional read(@PathVariable Integer id){
         return service.read(id);
     }
 

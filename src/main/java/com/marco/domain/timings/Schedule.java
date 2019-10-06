@@ -1,9 +1,15 @@
 package com.marco.domain.timings;
 
-import java.util.Date;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Entity;
 
+@Entity
 public class Schedule {
-    private String scheduleID;
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private int scheduleID;
     private String arrival;
     private String departure;
 
@@ -24,16 +30,16 @@ public class Schedule {
         return departure;
     }
 
-    public String getScheduleID() {
+    public int getScheduleID() {
         return scheduleID;
     }
 
     public static class Builder{
-        private String scheduleID;
+        private int scheduleID;
         private String arrival;
         private String departure;
 
-        public Builder scheduleID(String scheduleID){
+        public Builder scheduleID(int scheduleID){
             this.scheduleID = scheduleID;
             return this;
         }

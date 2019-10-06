@@ -36,11 +36,11 @@ public class ReportControllerTest {
 
     @Test
     public void c_update() {
-        Report report = restTemplate.getForObject(baseURL + "/read/20", Report.class);
+        Report report = restTemplate.getForObject(baseURL + "/read/400", Report.class);
         Report updated = new Report.Builder().copy(report).profit(250).build();
         restTemplate.put(baseURL + "/update", updated);
 
-        Report updatedReport = restTemplate.getForObject(baseURL + "/read/20", Report.class);
+        Report updatedReport = restTemplate.getForObject(baseURL + "/read/400", Report.class);
 
         assertNotNull(updatedReport);
         assertEquals(updated.getProfit(), updatedReport.getProfit(), 0.1);
@@ -48,21 +48,21 @@ public class ReportControllerTest {
 
     @Test
     public void e_delete() {
-        Report report = restTemplate.getForObject(baseURL + "/read/20", Report.class);
+        Report report = restTemplate.getForObject(baseURL + "/read/400", Report.class);
         assertNotNull(report);
-        assertEquals(20, report.getReportID());
+        assertEquals(400, report.getReportID());
 
         restTemplate.delete(baseURL + "/delete/" + report.getReportID());
-        report = restTemplate.getForObject(baseURL + "/read/20", Report.class);
+        report = restTemplate.getForObject(baseURL + "/read/400", Report.class);
 
         assertNull(report);
     }
 
     @Test
     public void b_read() {
-        ResponseEntity<Report> reportResponseEntity = restTemplate.getForEntity(baseURL + "/read/20", Report.class);
+        ResponseEntity<Report> reportResponseEntity = restTemplate.getForEntity(baseURL + "/read/400", Report.class);
         assertNotNull(reportResponseEntity.getBody());
-        assertEquals(20, reportResponseEntity.getBody().getReportID());
+        assertEquals(400, reportResponseEntity.getBody().getReportID());
     }
 
     @Test

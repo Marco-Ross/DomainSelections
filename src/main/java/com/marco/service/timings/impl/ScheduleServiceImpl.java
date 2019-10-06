@@ -1,44 +1,65 @@
 package com.marco.service.timings.impl;
 
 import com.marco.domain.timings.Schedule;
+import com.marco.domain.timings.compositeclass.TrainSchedule;
 import com.marco.domain.transit.Train;
-import com.marco.repository.timings.impl.ScheduleRepositoryImpl;
 import com.marco.repository.timings.timingrepo.ScheduleRepository;
 import com.marco.service.timings.timingservice.ScheduleService;
+import com.marco.service.timings.timingservice.TrainScheduleService;
+import com.marco.service.transit.impl.TrainServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service("ScheduleServiceImpl")
 public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
-    @Qualifier("ScheduleRepoImpl")
     private ScheduleRepository repository;
+
+    @Autowired
+    private TrainServiceImpl trainService;
+
+    @Autowired
+    private TrainScheduleService trainScheduleService;
 
     @Override
     public ArrayList<Schedule> getAllSchedules() {
-        return this.repository.getAllSchedules();
+        return (ArrayList<Schedule>) this.repository.findAll();
     }
 
     @Override
     public Schedule create(Schedule schedule) {
-        return this.repository.create(schedule);
+        return this.repository.save(schedule);
     }
 
     @Override
     public Schedule update(Schedule schedule) {
-        return this.repository.update(schedule);
+        return this.repository.save(schedule);
     }
 
     @Override
-    public void delete(String scheduleID) {
-        this.repository.delete(scheduleID);
+    public void delete(Integer scheduleID) {
+        this.repository.deleteById(scheduleID);
     }
 
     @Override
-    public Schedule read(String scheduleID) {
-        return this.repository.read(scheduleID);
+    public Optional<Schedule> read(Integer scheduleID) {
+        return this.repository.findById(scheduleID);
+    }
+
+    public Schedule getScheduleWithTrainNumber(int trainNumber){
+        Train trainReceived = trainService.getTrainWithTrainNumber(trainNumber); //Read train to get ID
+
+        for(TrainSchedule trainSchedule : trainScheduleService.getAllTrainSchedules()){
+            if(trainSchedule.getTrainID()== trainReceived.getTrainID()){
+                for(Schedule schedule : repository.findAll()){
+                    if(schedule.getScheduleID() == trainSchedule.getScheduleID()){
+                        return schedule;
+                    }
+                }
+            }
+        }return null;
     }
 }

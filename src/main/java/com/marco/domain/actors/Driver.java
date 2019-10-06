@@ -1,9 +1,14 @@
 package com.marco.domain.actors;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Driver implements Employee{
+    @Id
+    private int employeeNumber;
     private String name;
     private String surname;
-    private int employeeNumber;
 
     private Driver(){}
 

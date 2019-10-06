@@ -1,6 +1,11 @@
 package com.marco.domain.transit;
 
+import javax.persistence.Id;
+import javax.persistence.Entity;
+
+@Entity
 public class Route {
+    @Id
     private int routeAreaCode;
     private String routeName;
 

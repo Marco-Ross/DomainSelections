@@ -5,8 +5,8 @@ import com.marco.util.OverBook;
 import com.marco.util.RandomID;
 
 public class TrainFactory {
-    public static Train buildTrain(String trainNumber, int capacity){
-        return new Train.Builder().trainID(RandomID.generateRandomID())
+    public static Train buildTrain(int trainNumber, int capacity){
+        return new Train.Builder()
                 .capacity(capacity + OverBook.overbookTrains())
                 .trainNumber(trainNumber)
                 .build();

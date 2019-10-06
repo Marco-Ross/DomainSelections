@@ -24,7 +24,7 @@ public class CustomerControllerTest {
 
     @Test
     public void a_create() {
-        Customer customer = CustomerFactory.buildCustomer("marco", "ross", 23, "12345678910", 200);
+        Customer customer = CustomerFactory.buildCustomer(1234567891, "marco", "ross", 23, 200);
 
         ResponseEntity<Customer> postResponse = restTemplate.withBasicAuth("Kaylin", "pass02").postForEntity(baseURL + "/create", customer, Customer.class); //USE EXCHANGE FOR NEXT CREATE
 
@@ -39,11 +39,11 @@ public class CustomerControllerTest {
         headers.set("CustomerHeader", "This is the getAll header");
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        Customer customer = restTemplate.getForObject(baseURL + "/read/12345678910", Customer.class); //Reading announcer with empNumber 55
+        Customer customer = restTemplate.getForObject(baseURL + "/read/1234567891", Customer.class); //Reading announcer with empNumber 55
         Customer updated = new Customer.Builder().copy(customer).surname("newRoss").build();
         restTemplate.withBasicAuth("Kaylin", "pass02").put(baseURL + "/update", updated); //Void method(put) to link to (/update) EndPoint and update with new Announcer object
 
-        Customer updatedCustomer = restTemplate.getForObject(baseURL + "/read/12345678910", Customer.class); //Reading announcer with empNumber 55 to check if updated
+        Customer updatedCustomer = restTemplate.getForObject(baseURL + "/read/1234567891", Customer.class); //Reading announcer with empNumber 55 to check if updated
 
         assertNotNull(updatedCustomer);
         assertEquals(updated.getSurname(), updatedCustomer.getSurname());
@@ -51,21 +51,21 @@ public class CustomerControllerTest {
 
     @Test
     public void e_delete() {
-        Customer customer = restTemplate.getForObject(baseURL + "/read/12345678910", Customer.class);
+        Customer customer = restTemplate.getForObject(baseURL + "/read/1234567891", Customer.class);
         assertNotNull(customer);
-        assertEquals("12345678910", customer.getIdNumber());
+        assertEquals(1234567891, customer.getIdNumber());
 
         restTemplate.withBasicAuth("Kaylin", "pass02").delete(baseURL + "/delete/" + customer.getIdNumber());
-        customer = restTemplate.getForObject(baseURL + "/read/12345678910", Customer.class);
+        customer = restTemplate.getForObject(baseURL + "/read/1234567891", Customer.class);
 
         assertNull(customer);
     }
 
     @Test
     public void b_read() {
-        ResponseEntity<Customer> customerResponseEntity = restTemplate.withBasicAuth("Marco", "pass01").getForEntity(baseURL + "/read/12345678910", Customer.class);
+        ResponseEntity<Customer> customerResponseEntity = restTemplate.withBasicAuth("Marco", "pass01").getForEntity(baseURL + "/read/1234567891", Customer.class);
         assertNotNull(customerResponseEntity.getBody());
-        assertEquals("12345678910", customerResponseEntity.getBody().getIdNumber());
+        assertEquals(1234567891, customerResponseEntity.getBody().getIdNumber());
     }
 
     @Test

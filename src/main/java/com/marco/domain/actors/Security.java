@@ -1,9 +1,14 @@
 package com.marco.domain.actors;
 
+import javax.persistence.Id;
+import javax.persistence.Entity;
+
+@Entity
 public class Security implements Employee{
+    @Id
+    private int employeeNumber;
     private String name;
     private String surname;
-    private int employeeNumber;
 
     private Security(){}
 

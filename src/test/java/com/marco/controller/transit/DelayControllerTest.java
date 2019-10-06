@@ -29,8 +29,7 @@ public class DelayControllerTest {
 
     @Test
     public void a_create() {
-        Station station = StationFactory.buildStation("Stikland", 12);
-        Delay delay = DelayFactory.buildDelay(10, station, "Man hit by train");
+        Delay delay = DelayFactory.buildDelay(10, "Man hit by train");
 
         ResponseEntity<Delay> postResponse = restTemplate.postForEntity(baseURL + "/create", delay, Delay.class);
         assertNotNull(postResponse);

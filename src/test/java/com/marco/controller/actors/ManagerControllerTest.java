@@ -24,7 +24,7 @@ public class ManagerControllerTest {
 
     @Test
     public void a_create() {
-        Manager manager = ManagerFactory.buildManager("john", "poop", 32);
+        Manager manager = ManagerFactory.buildManager(32, "john", "poop");
 
         ResponseEntity<Manager> postResponse = restTemplate.withBasicAuth("Kaylin", "pass02").postForEntity(baseURL + "/create", manager, Manager.class);
 

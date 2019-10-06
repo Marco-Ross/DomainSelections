@@ -1,11 +1,11 @@
 package com.marco.factory.timings;
 
-import com.marco.domain.timings.TrainSchedule;
+import com.marco.domain.timings.compositeclass.TrainSchedule;
 
 public class TrainScheduleFactory {
-    public static TrainSchedule buildTrainSchedule(String scheduleID,String trainID){
+    public static TrainSchedule buildTrainSchedule(int scheduleID,int trainID){
         return new TrainSchedule.Builder().scheduleID(scheduleID)
-                .trainNumber(trainID)
+                .trainID(trainID)
                 .build();
     }
 }

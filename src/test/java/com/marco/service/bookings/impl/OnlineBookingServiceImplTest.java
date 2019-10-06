@@ -17,8 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
-import static org.junit.Assert.*;
+import java.util.Optional;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -57,7 +56,7 @@ public class OnlineBookingServiceImplTest {
     @Test
     public void a_create() {
         OnlineBooking onlineBookingTest = this.service.create(onlineBooking);
-        Assert.assertEquals(onlineBooking, onlineBookingTest);
+        Assert.assertEquals(onlineBooking.getOnlineBookingId(), onlineBookingTest.getOnlineBookingId());
     }
 
     @Test
@@ -84,7 +83,8 @@ public class OnlineBookingServiceImplTest {
 
     @Test
     public void b_read() {
-        OnlineBooking onlineBookingRead = service.read(13);
-        Assert.assertSame(onlineBooking.getOnlineBookingId(), onlineBookingRead.getOnlineBookingId());
+        Optional<OnlineBooking> onlineBookingRead = service.read(13);
+        Assert.assertTrue(onlineBookingRead.isPresent());
+        Assert.assertSame(onlineBooking.getOnlineBookingId(), onlineBookingRead.get().getOnlineBookingId());
     }
 }

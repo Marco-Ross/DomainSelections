@@ -15,8 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
+import java.util.Optional;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -51,7 +50,7 @@ public class EngineServiceImplTest {
     public void a_create() {
         Engine engineTest = this.service.create(engine);
 
-        Assert.assertEquals(engine, engineTest);
+        Assert.assertEquals(engine.getEngineNumber(), engineTest.getEngineNumber());
     }
 
     @Test
@@ -75,7 +74,8 @@ public class EngineServiceImplTest {
 
     @Test
     public void b_read() {
-        Engine engineList = service.read(2553);
-        Assert.assertEquals(engine.getEngineNumber(), engineList.getEngineNumber());
+        Optional<Engine> engineRead = service.read(2553);
+        Assert.assertTrue(engineRead.isPresent());
+        Assert.assertEquals(engine.getEngineNumber(), engineRead.get().getEngineNumber());
     }
 }

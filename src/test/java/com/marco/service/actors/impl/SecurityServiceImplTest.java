@@ -14,9 +14,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Optional;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -38,7 +37,7 @@ public class SecurityServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        security = SecurityFactory.buildSecurity("marco", "ross", 3654);
+        security = SecurityFactory.buildSecurity(3654, "marco", "ross");
     }
 
     @Test
@@ -50,7 +49,7 @@ public class SecurityServiceImplTest {
     @Test
     public void a_create() {
         Security securityTest = this.service.create(security);
-        Assert.assertEquals(security, securityTest);
+        Assert.assertEquals(security.getEmployeeNumber(), securityTest.getEmployeeNumber());
     }
 
     @Test
@@ -74,7 +73,8 @@ public class SecurityServiceImplTest {
 
     @Test
     public void b_read() {
-        Security securityRead = service.read(3654);
-        Assert.assertEquals(security.getEmployeeNumber(), securityRead.getEmployeeNumber());
+        Optional<Security> securityRead = service.read(3654);
+        Assert.assertTrue(securityRead.isPresent());
+        Assert.assertEquals(security.getEmployeeNumber(), securityRead.get().getEmployeeNumber());
     }
 }

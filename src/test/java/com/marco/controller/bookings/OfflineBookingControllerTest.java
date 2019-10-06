@@ -42,7 +42,7 @@ public class OfflineBookingControllerTest {
 
     @Test
     public void a_create() {
-        OfflineBooking offlineBooking = OfflineBookingFactory.buildOfflineBooking(bookedDate, 62);
+        OfflineBooking offlineBooking = OfflineBookingFactory.buildOfflineBooking(13, bookedDate, 62);
 
         ResponseEntity<OfflineBooking> postResponse = restTemplate.postForEntity(baseURL + "/create", offlineBooking, OfflineBooking.class); //USE EXCHANGE FOR NEXT CREATE
         assertNotNull(postResponse);
@@ -51,34 +51,34 @@ public class OfflineBookingControllerTest {
 
     @Test
     public void c_update() {
-        ResponseEntity<OfflineBooking> offlineBookingResponseEntity = restTemplate.postForEntity(baseURL + "/read", bookedDate, OfflineBooking.class);
-        assertNotNull(offlineBookingResponseEntity.getBody());
+        OfflineBooking offlineBookingResponse = restTemplate.getForObject(baseURL + "/read/13", OfflineBooking.class);
+        assertNotNull(offlineBookingResponse);
 
-        OfflineBooking updated = new OfflineBooking.Builder().copy(offlineBookingResponseEntity.getBody()).offlineQuantityBooked(70).build();
+        OfflineBooking updated = new OfflineBooking.Builder().copy(offlineBookingResponse).offlineQuantityBooked(70).build();
         restTemplate.put(baseURL + "/update", updated); //Void method(put) to link to (/update) EndPoint and update with new Announcer object
 
-        ResponseEntity<OfflineBooking> updatedOfflineBookingResponseEntity = restTemplate.postForEntity(baseURL + "/read", bookedDate, OfflineBooking.class);
+        OfflineBooking updatedOfflineBookingResponse = restTemplate.getForObject(baseURL + "/read/13", OfflineBooking.class);
 
-        assertNotNull(updatedOfflineBookingResponseEntity.getBody());
-        assertEquals(updated.getOfflineQuantityBooked(), updatedOfflineBookingResponseEntity.getBody().getOfflineQuantityBooked());
+        assertNotNull(updatedOfflineBookingResponse);
+        assertEquals(updated.getOfflineQuantityBooked(), updatedOfflineBookingResponse.getOfflineQuantityBooked());
     }
 
     @Test
     public void e_delete() {
-        ResponseEntity<OfflineBooking> offlineBookingResponseEntity = restTemplate.postForEntity(baseURL + "/read", bookedDate, OfflineBooking.class);
-        assertNotNull(offlineBookingResponseEntity.getBody());
-        assertEquals(bookedDate, offlineBookingResponseEntity.getBody().getOfflineBookingDate());
+        OfflineBooking offlineBookingResponse = restTemplate.getForObject(baseURL + "/read/13", OfflineBooking.class);
+        assertNotNull(offlineBookingResponse);
+        assertEquals(bookedDate, offlineBookingResponse.getOfflineBookingDate());
 
-        restTemplate.postForEntity(baseURL + "/delete", bookedDate, void.class);
+        restTemplate.delete(baseURL + "/delete/" + offlineBookingResponse.getOfflineBookingID(), void.class);
 
-        offlineBookingResponseEntity = restTemplate.postForEntity(baseURL + "/read", bookedDate, OfflineBooking.class);
+        offlineBookingResponse = restTemplate.getForObject(baseURL + "/read/13", OfflineBooking.class);
 
-        assertNull(offlineBookingResponseEntity.getBody());
+        assertNull(offlineBookingResponse);
     }
 
     @Test
     public void b_read() {
-        ResponseEntity<OfflineBooking> offlineBookingResponseEntity = restTemplate.postForEntity(baseURL + "/read", bookedDate, OfflineBooking.class);
+        ResponseEntity<OfflineBooking> offlineBookingResponseEntity = restTemplate.getForEntity(baseURL + "/read/13", OfflineBooking.class);
 
         assertNotNull(offlineBookingResponseEntity.getBody());
         assertEquals(bookedDate, offlineBookingResponseEntity.getBody().getOfflineBookingDate());

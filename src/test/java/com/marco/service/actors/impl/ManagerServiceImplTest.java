@@ -15,8 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
+import java.util.Optional;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -38,7 +37,7 @@ public class ManagerServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        manager = ManagerFactory.buildManager("marco", "ross", 5532);
+        manager = ManagerFactory.buildManager(5532, "marco", "ross");
     }
 
     @Test
@@ -50,7 +49,7 @@ public class ManagerServiceImplTest {
     @Test
     public void a_create() {
         Manager managerTest = this.service.create(manager);
-        Assert.assertEquals(manager, managerTest);
+        Assert.assertEquals(manager.getEmployeeNumber(), managerTest.getEmployeeNumber());
     }
 
     @Test
@@ -74,7 +73,8 @@ public class ManagerServiceImplTest {
 
     @Test
     public void b_read() {
-        Manager managerRead = service.read(5532);
-        Assert.assertEquals(manager.getEmployeeNumber(), managerRead.getEmployeeNumber());
+        Optional<Manager> managerRead = service.read(5532);
+        Assert.assertTrue(managerRead.isPresent());
+        Assert.assertEquals(manager.getEmployeeNumber(), managerRead.get().getEmployeeNumber());
     }
 }

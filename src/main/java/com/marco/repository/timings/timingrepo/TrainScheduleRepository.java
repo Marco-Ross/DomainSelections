@@ -1,10 +1,7 @@
 package com.marco.repository.timings.timingrepo;
 
-import com.marco.domain.timings.TrainSchedule;
-import com.marco.repository.RepositoryGI;
+import com.marco.domain.timings.compositeclass.TrainSchedule;
+import org.springframework.data.repository.CrudRepository;
 
-import java.util.Set;
-
-public interface TrainScheduleRepository extends RepositoryGI<TrainSchedule, String> {
-    Set<TrainSchedule> getAllTrainSchedules();
+public interface TrainScheduleRepository extends CrudRepository<TrainSchedule, Integer> {
 }

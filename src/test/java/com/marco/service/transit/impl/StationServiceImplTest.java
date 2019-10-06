@@ -14,9 +14,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Optional;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -51,7 +50,7 @@ public class StationServiceImplTest {
     public void a_create() {
         Station stationTest = this.service.create(station);
 
-        Assert.assertEquals(station, stationTest);
+        Assert.assertEquals(station.getStationNumber(), stationTest.getStationNumber());
     }
 
     @Test
@@ -75,7 +74,8 @@ public class StationServiceImplTest {
 
     @Test
     public void b_read() {
-        Station stationList = service.read(12);
-        Assert.assertEquals(station.getStationNumber(), stationList.getStationNumber());
+        Optional<Station> stationRead = service.read(12);
+        Assert.assertTrue(stationRead.isPresent());
+        Assert.assertEquals(station.getStationNumber(), stationRead.get().getStationNumber());
     }
 }

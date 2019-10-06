@@ -1,14 +1,13 @@
 package com.marco.controller.actors;
 
-import com.marco.domain.actors.Customer;
 import com.marco.domain.actors.Driver;
-import com.marco.service.actors.actorservice.CustomerService;
 import com.marco.service.actors.actorservice.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -38,7 +37,7 @@ public class DriverController {
 
     @GetMapping("/read/{id}")
     @ResponseBody
-    public Driver read(@PathVariable Integer id){
+    public Optional read(@PathVariable Integer id){
         return service.read(id);
     }
 
