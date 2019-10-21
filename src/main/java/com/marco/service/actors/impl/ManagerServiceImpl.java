@@ -38,4 +38,8 @@ public class ManagerServiceImpl implements ManagerService {
     public Optional<Manager> read(Integer manager) {
         return this.repository.findById(manager);
     }
+
+    public void deleteAll() {
+        this.repository.deleteAll();
+    }
 }

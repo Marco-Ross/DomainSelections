@@ -40,4 +40,8 @@ public class AnnouncerServiceImpl implements AnnouncerService {
     public Optional<Announcer> read(Integer announcer) {
         return this.repository.findById(announcer);
     }
+
+    public void deleteAll() {
+        this.repository.deleteAll();
+    }
 }

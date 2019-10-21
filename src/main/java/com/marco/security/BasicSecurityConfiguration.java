@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -31,11 +30,13 @@ public class BasicSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .httpBasic()
-            .and()
+                .antMatcher("/railway").authorizeRequests().anyRequest().hasRole("USER").and()
+                .httpBasic()
+                .and()
                 .authorizeRequests()
+                .antMatchers("/railway/schedule/getAll").hasRole("ADMIN")
                 .antMatchers("/railway/actor/**/create", "/railway/actor/**/delete", "/railway/actor/**/update").hasRole("ADMIN")
-            .and()
+                .and()
                 .csrf().disable();
     }
 

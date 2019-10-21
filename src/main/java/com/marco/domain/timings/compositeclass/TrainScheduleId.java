@@ -10,8 +10,16 @@ public class TrainScheduleId implements Serializable {
     public TrainScheduleId() {
     }
 
-    public TrainScheduleId(int scheduleID, int trainID) {
+    public TrainScheduleId(int scheduleID, int trainID, int stationID) {
         this.scheduleID = scheduleID;
+        this.trainID = trainID;
+    }
+
+    public void setScheduleID(int scheduleID) {
+        this.scheduleID = scheduleID;
+    }
+
+    public void setTrainID(int trainID) {
         this.trainID = trainID;
     }
 

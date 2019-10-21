@@ -1,8 +1,10 @@
 package com.marco.service.timings.impl;
 
 import com.marco.domain.timings.Schedule;
+import com.marco.domain.timings.clientobject.NewSchedule;
 import com.marco.domain.timings.compositeclass.TrainSchedule;
 import com.marco.domain.transit.Train;
+import com.marco.factory.timings.NewScheduleFactory;
 import com.marco.repository.timings.timingrepo.ScheduleRepository;
 import com.marco.service.timings.timingservice.ScheduleService;
 import com.marco.service.timings.timingservice.TrainScheduleService;
@@ -61,5 +63,21 @@ public class ScheduleServiceImpl implements ScheduleService {
                 }
             }
         }return null;
+    }
+
+    public ArrayList<NewSchedule> getAllTrainSchedules(){
+        ArrayList<NewSchedule> newSchedules = new ArrayList<>();
+        for (TrainSchedule trainSchedule : trainScheduleService.getAllTrainSchedules()) {
+            for(Train train : trainService.getAllTrains()){
+                if (trainSchedule.getTrainID() == train.getTrainID()) {
+                    for (Schedule schedule : repository.findAll()) {
+                        if (schedule.getScheduleID() == trainSchedule.getScheduleID()) {
+                            newSchedules.add(NewScheduleFactory.buildNewSchedule(train.getTrainNumber(), train.getCapacity(),schedule.getDepartureDate(), schedule.getDeparture(), schedule.getArrival()));
+                        }
+                    }
+                }
+            }
+        }
+        return newSchedules;
     }
 }

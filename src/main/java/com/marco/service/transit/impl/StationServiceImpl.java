@@ -22,6 +22,9 @@ public class StationServiceImpl implements StationService {
 
     @Override
     public Station create(Station station) {
+        if(repository.findById(station.getStationNumber()).isPresent() || station.getStationName().equals(repository.findAll())){
+            return null;
+        }
         return this.repository.save(station);
     }
 

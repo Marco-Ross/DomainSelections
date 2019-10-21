@@ -22,6 +22,9 @@ public class TrainServiceImpl implements TrainService {
 
     @Override
     public Train create(Train train) {
+        if(getTrainWithTrainNumber(train.getTrainNumber()) != null){
+            return null;
+        }
         return this.repository.save(train);
     }
 

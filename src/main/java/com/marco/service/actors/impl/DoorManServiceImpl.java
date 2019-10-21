@@ -40,4 +40,8 @@ public class DoorManServiceImpl implements DoorManService {
     public Optional<DoorMan> read(Integer driver) {
         return this.repository.findById(driver);
     }
+
+    public void deleteAll() {
+        this.repository.deleteAll();
+    }
 }

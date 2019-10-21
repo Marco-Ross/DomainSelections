@@ -38,4 +38,8 @@ public class TicketCheckerServiceImpl implements TicketCheckerService {
     public Optional<TicketChecker> read(Integer ticketChecker) {
         return this.repository.findById(ticketChecker);
     }
+
+    public void deleteAll() {
+        this.repository.deleteAll();
+    }
 }

@@ -39,4 +39,8 @@ public class CustomerServiceImpl implements CustomerService {
     public Optional<Customer> read(Integer customer) {
         return this.repository.findById(customer);
     }
+
+    public void deleteAll() {
+        this.repository.deleteAll();
+    }
 }

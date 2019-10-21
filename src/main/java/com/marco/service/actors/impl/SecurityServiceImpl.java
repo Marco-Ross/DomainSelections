@@ -40,4 +40,8 @@ public class SecurityServiceImpl implements SecurityService {
     public Optional<Security> read(Integer security) {
         return this.repository.findById(security);
     }
+
+    public void deleteAll() {
+        this.repository.deleteAll();
+    }
 }

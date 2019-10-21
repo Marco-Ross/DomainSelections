@@ -1,12 +1,10 @@
 package com.marco.service.timings.impl;
 
 import com.marco.domain.timings.Schedule;
+import com.marco.domain.timings.clientobject.NewSchedule;
 import com.marco.factory.timings.ScheduleFactory;
 import com.marco.service.timings.timingservice.ScheduleService;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +14,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ScheduleServiceImplTest {
     @Autowired
-    @Qualifier("ScheduleServiceImpl")
     private ScheduleService service;
+    @Autowired
+    private TrainScheduleServiceImpl trainScheduleService;
     private Schedule schedule;
     private Date departureTime;
 
@@ -49,11 +45,12 @@ public class ScheduleServiceImplTest {
         departureTime = depart.getTime();
         Date arrivalTime = arrive.getTime();
 
-        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Format formatter = new SimpleDateFormat("HH:mm:ss");
+        String departureDateString = "10-20-2019";
         String departureString = formatter.format(departureTime);
         String arrivalString = formatter.format(arrivalTime);
 
-        if(service.getAllSchedules().size() == 0){ schedule = ScheduleFactory.buildSchedule(departureString, arrivalString);}
+        if(service.getAllSchedules().size() == 0){ schedule = ScheduleFactory.buildSchedule(departureDateString, departureString, arrivalString);}
         else{schedule = service.getAllSchedules().get(0);}
     }
 
@@ -77,7 +74,7 @@ public class ScheduleServiceImplTest {
         depart.set(0, 0, 0,4,30,0);
         departureTime = depart.getTime();
 
-        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Format formatter = new SimpleDateFormat("HH:mm:ss");
         String departureString = formatter.format(departureTime);
 
         Schedule updated = new Schedule.Builder().copy(getRepo()).departure(departureString).build();
@@ -100,5 +97,10 @@ public class ScheduleServiceImplTest {
         Optional<Schedule> scheduleRead = service.read(schedule.getScheduleID());
         Assert.assertTrue(scheduleRead.isPresent());
         Assert.assertEquals(schedule.getScheduleID(), scheduleRead.get().getScheduleID());
+    }
+    @Test @Ignore //Cannot run this without having a schedule first
+    public void b_readTime() {
+        List<NewSchedule> scheduleRead = trainScheduleService.readTime(schedule.getDepartureDate(), schedule.getDeparture());
+        Assert.assertEquals(schedule.getDeparture(), scheduleRead.get(0).getDeparture());
     }
 }

@@ -40,4 +40,8 @@ public class TicketClerkServiceImpl implements TicketClerkService {
     public Optional<TicketClerk> read(Integer ticketClerk) {
         return this.repository.findById(ticketClerk);
     }
+
+    public void deleteAll() {
+        this.repository.deleteAll();
+    }
 }

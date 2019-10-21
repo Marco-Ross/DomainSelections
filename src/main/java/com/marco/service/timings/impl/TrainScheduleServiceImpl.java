@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import com.marco.domain.timings.clientobject.NewSchedule;
 import com.marco.domain.timings.Schedule;
 import com.marco.domain.timings.compositeclass.TrainSchedule;
+import com.marco.domain.timings.compositeclass.TrainScheduleId;
 import com.marco.domain.transit.Train;
 import com.marco.factory.timings.NewScheduleFactory;
 import com.marco.repository.timings.timingrepo.TrainScheduleRepository;
@@ -43,31 +44,33 @@ public class TrainScheduleServiceImpl implements TrainScheduleService {
     }
 
     @Override
-    public void delete(Integer trainScheduleID) {
-        trainScheduleRepository.deleteById(trainScheduleID);
+    public void delete(TrainScheduleId trainSchedule) {
+        trainScheduleRepository.deleteById(trainSchedule);
     }
 
     @Override
-    public Optional<TrainSchedule> read(Integer trainScheduleID) {
+    public Optional<TrainSchedule> read(TrainScheduleId trainScheduleID) {
         return trainScheduleRepository.findById(trainScheduleID);
     }
 
     @Override
-    public NewSchedule readTime(String time) {
+    public List<NewSchedule> readTime(String date, String time) {
+        List<NewSchedule> scheduleList = new ArrayList<>();
+
         for (Schedule schedule : scheduleService.getAllSchedules()) {
-            if (schedule.getDeparture().equals(time)) {
+            if (schedule.getDepartureDate().equals(date) && schedule.getDeparture().equals(time)) {
                 for (TrainSchedule trainSchedule : trainScheduleRepository.findAll()) {
                     if (schedule.getScheduleID() == trainSchedule.getScheduleID()) {
                         for(Train train : trainService.getAllTrains()){
                             if(train.getTrainID() == trainSchedule.getTrainID()){
-                                return NewScheduleFactory.buildNewSchedule(train.getTrainNumber(), train.getCapacity(), schedule.getDeparture(), schedule.getArrival());
+                                scheduleList.add(NewScheduleFactory.buildNewSchedule(train.getTrainNumber(), train.getCapacity(), schedule.getDepartureDate(), schedule.getDeparture(), schedule.getArrival()));
                             }
                         }
                     }
                 }
             }
         }
-        return null;
+        return scheduleList;
     }
 
     @Override
@@ -81,7 +84,7 @@ public class TrainScheduleServiceImpl implements TrainScheduleService {
             if (trainReceived.getTrainID() == trainSchedule.getTrainID()) {
                 for (Schedule schedule : scheduleService.getAllSchedules()) {
                     if (schedule.getScheduleID() == trainSchedule.getScheduleID()) {
-                        return NewScheduleFactory.buildNewSchedule(trainReceived.getTrainNumber(), trainReceived.getCapacity(), schedule.getDeparture(), schedule.getArrival());
+                        return NewScheduleFactory.buildNewSchedule(trainReceived.getTrainNumber(), trainReceived.getCapacity(), schedule.getDepartureDate(), schedule.getDeparture(), schedule.getArrival());
                     }
                 }
             }

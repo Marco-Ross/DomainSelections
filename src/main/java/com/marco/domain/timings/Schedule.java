@@ -10,6 +10,7 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int scheduleID;
+    private String departureDate;
     private String arrival;
     private String departure;
 
@@ -18,6 +19,7 @@ public class Schedule {
 
     private Schedule(Builder builder){
         this.departure = builder.departure;
+        this.departureDate = builder.departureDate;
         this.arrival = builder.arrival;
         this.scheduleID = builder.scheduleID;
     }
@@ -34,13 +36,23 @@ public class Schedule {
         return scheduleID;
     }
 
+    public String getDepartureDate() {
+        return departureDate;
+    }
+
     public static class Builder{
         private int scheduleID;
+        private String departureDate;
         private String arrival;
         private String departure;
 
         public Builder scheduleID(int scheduleID){
             this.scheduleID = scheduleID;
+            return this;
+        }
+
+        public Builder departureDate(String departureDate){
+            this.departureDate = departureDate;
             return this;
         }
 
@@ -56,6 +68,7 @@ public class Schedule {
 
         public Builder copy(Schedule schedule){
             this.scheduleID = schedule.scheduleID;
+            this.departureDate = schedule.departureDate;
             this.arrival = schedule.arrival;
             this.departure = schedule.departure;
 

@@ -39,4 +39,8 @@ public class DriverServiceImpl implements DriverService {
     public Optional<Driver> read(Integer driver) {
         return this.repository.findById(driver);
     }
+
+    public void deleteAll() {
+        this.repository.deleteAll();
+    }
 }

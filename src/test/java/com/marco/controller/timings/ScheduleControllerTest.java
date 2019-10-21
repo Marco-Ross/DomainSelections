@@ -14,16 +14,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.lang.reflect.ParameterizedType;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -50,14 +54,16 @@ public class ScheduleControllerTest {
         Date arrivalTime = arrive.getTime();
 
         Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String departureDateString = "10-20-2019";
         String departureString = formatter.format(departureTime);
         String arrivalString = formatter.format(arrivalTime);
 
-        newSchedule = NewScheduleFactory.buildNewSchedule(2530, 200, departureString, arrivalString);
+        newSchedule = NewScheduleFactory.buildNewSchedule(2530, 200, departureDateString, departureString, arrivalString);
     }
 
     @Test
     public void a_create() {
+        //create mock train for test
         Train train = TrainFactory.buildTrain(2530,200);
         ResponseEntity<Train> trainPostResponse = restTemplate.postForEntity("http://localhost:8080/railway/train/create", train, Train.class);
         assertNotNull(trainPostResponse);
@@ -89,7 +95,7 @@ public class ScheduleControllerTest {
         assertNotNull(getTrain);
         assertEquals(2530, getTrain.getTrainNumber());
 
-        restTemplate.delete(baseURL + "/delete/" + getTrain.getTrainNumber());
+        restTemplate.delete(baseURL + "/delete/" + getTrain.getTrainNumber() + "/" + getTrain.getDeparture());
         getTrain = restTemplate.getForObject(baseURL + "/readTrain/2530", NewSchedule.class);
 
         assertNull(getTrain);
@@ -97,9 +103,16 @@ public class ScheduleControllerTest {
 
     @Test
     public void b_read() { //Return all trains at this time
-        ResponseEntity<NewSchedule> scheduleResponseEntity = restTemplate.getForEntity(baseURL + "/readTrain/" + newSchedule.getTrainNumber(), NewSchedule.class);
-        assertNotNull(scheduleResponseEntity.getBody());
-        assertEquals(2530, scheduleResponseEntity.getBody().getTrainNumber());
+        ResponseEntity<List<NewSchedule>> responseEntity =
+                restTemplate.exchange(baseURL + "/readTime/" + newSchedule.getDepartureDate() + "/" + newSchedule.getDeparture(),
+                        HttpMethod.GET, null, new ParameterizedTypeReference<List<NewSchedule>>() {
+                        });
+
+        List<NewSchedule> scheduleResponseEntity = responseEntity.getBody();
+
+        //ResponseEntity<List<NewSchedule>> scheduleResponseEntity = restTemplate.getForEntity(baseURL + "/readTime/" + newSchedule.getDepartureDate() + "/" + newSchedule.getDeparture(),List<NewSchedule> );
+        assertNotNull(scheduleResponseEntity);
+        assertEquals(2530, scheduleResponseEntity.get(0).getTrainNumber());
     }
 
     @Test

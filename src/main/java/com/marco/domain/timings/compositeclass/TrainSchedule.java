@@ -39,6 +39,7 @@ public class TrainSchedule {
             this.trainID = trainID;
             return this;
         }
+
         public TrainSchedule build(){
             return new TrainSchedule(this);
         }
