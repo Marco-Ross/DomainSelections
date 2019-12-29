@@ -65,7 +65,7 @@ public class ScheduleControllerTest {
     public void a_create() {
         //create mock train for test
         Train train = TrainFactory.buildTrain(2530,200);
-        ResponseEntity<Train> trainPostResponse = restTemplate.postForEntity("http://localhost:8080/railway/train/create", train, Train.class);
+        ResponseEntity<Train> trainPostResponse = restTemplate.withBasicAuth("Kaylin", "pass02").postForEntity("http://localhost:8080/railway/train/create", train, Train.class);
         assertNotNull(trainPostResponse);
         assertNotNull(trainPostResponse.getBody());
 
@@ -121,7 +121,7 @@ public class ScheduleControllerTest {
         headers.set("ScheduleHeader", "This is the getAll header");
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<String>  responseEntity = restTemplate.exchange(baseURL + "/getAll", HttpMethod.GET, entity, String.class);
+        ResponseEntity<String>  responseEntity = restTemplate.withBasicAuth("Kaylin", "pass02").exchange(baseURL + "/getAll", HttpMethod.GET, entity, String.class);
         System.out.println(responseEntity);
     }
 }

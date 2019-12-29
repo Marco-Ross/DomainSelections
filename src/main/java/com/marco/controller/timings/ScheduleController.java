@@ -97,7 +97,7 @@ public class ScheduleController {
                             trainScheduleId.setTrainID(trainRequested.getTrainID());
 
                             scheduleService.delete(schedule2.getScheduleID());
-                            trainService.delete(trainNumber);
+                            //trainService.delete(trainNumber);
                             trainScheduleService.delete(trainScheduleId);
                         }
                     }

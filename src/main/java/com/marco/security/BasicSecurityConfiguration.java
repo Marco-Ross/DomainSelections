@@ -30,12 +30,13 @@ public class BasicSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .antMatcher("/railway").authorizeRequests().anyRequest().hasRole("USER").and()
-                .httpBasic()
-                .and()
+                //.antMatcher("/railway").authorizeRequests().anyRequest().hasRole("USER").and()
                 .authorizeRequests()
+                .antMatchers("/railway").hasRole("USER")
                 .antMatchers("/railway/schedule/getAll").hasRole("ADMIN")
                 .antMatchers("/railway/actor/**/create", "/railway/actor/**/delete", "/railway/actor/**/update").hasRole("ADMIN")
+                .and()
+                .httpBasic()
                 .and()
                 .csrf().disable();
     }
